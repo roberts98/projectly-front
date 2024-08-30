@@ -3,7 +3,7 @@ import { Expense, NewExpense, UpdateExpense } from "../models/expense";
 export class ExpenseHttpService {
   public static async fetchExpenses(projectId: number): Promise<Expense[]> {
     const response = await fetch(
-      `https://monthly-stormie-robertive-7c7712bb.koyeb.app/api/projects/${projectId}/expenses`
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses`
     );
     const json = await response.json();
     return json.data;
@@ -13,7 +13,7 @@ export class ExpenseHttpService {
     projectId: number
   ): Promise<[number | null, number][]> {
     const response = await fetch(
-      `/api/projects/${projectId}/expenses/pie-chart`
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses/pie-chart`
     );
     const json = await response.json();
     return json.data;
@@ -24,7 +24,9 @@ export class ExpenseHttpService {
     roomId: number
   ): Promise<[number | null, number][]> {
     const response = await fetch(
-      `/api/projects/${projectId}/rooms/${roomId}/expenses/pie-chart`
+      `${
+        import.meta.env.VITE_API_URL
+      }/projects/${projectId}/rooms/${roomId}/expenses/pie-chart`
     );
     const json = await response.json();
     return json.data;
@@ -35,7 +37,7 @@ export class ExpenseHttpService {
     projectId: number
   ): Promise<number> {
     const response = await fetch(
-      `https://monthly-stormie-robertive-7c7712bb.koyeb.app/api/projects/${projectId}/expenses`,
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses`,
       {
         method: "POST",
         body: JSON.stringify(expense),
@@ -51,7 +53,9 @@ export class ExpenseHttpService {
     updateExpense: UpdateExpense
   ): Promise<null> {
     const response = await fetch(
-      `/api/projects/${projectId}/expenses/${expenseId}`,
+      `${
+        import.meta.env.VITE_API_URL
+      }/projects/${projectId}/expenses/${expenseId}`,
       {
         method: "PUT",
         body: JSON.stringify(updateExpense),
@@ -66,7 +70,9 @@ export class ExpenseHttpService {
     expenseId: number
   ): Promise<null> {
     const response = await fetch(
-      `/api/projects/${projectId}/expenses/${expenseId}`,
+      `${
+        import.meta.env.VITE_API_URL
+      }/projects/${projectId}/expenses/${expenseId}`,
       {
         method: "DELETE",
       }
