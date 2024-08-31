@@ -11,7 +11,7 @@ export class ExpenseHttpService {
 
   public static async fetchExpensesForProjectPieChart(
     projectId: number
-  ): Promise<[number | null, number][]> {
+  ): Promise<[number, number][]> {
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses/pie-chart`
     );
@@ -22,7 +22,7 @@ export class ExpenseHttpService {
   public static async fetchExpensesForRoomPieChart(
     projectId: number,
     roomId: number
-  ): Promise<[number | null, number][]> {
+  ): Promise<[number, number][]> {
     const response = await fetch(
       `${
         import.meta.env.VITE_API_URL

@@ -5,6 +5,7 @@ export function useExpenses(projectId: number) {
   const { data: expenses = [] } = useQuery({
     queryKey: [`expenses-${projectId}`],
     queryFn: () => ExpenseHttpService.fetchExpenses(projectId),
+    staleTime: Infinity,
   });
 
   return { expenses };

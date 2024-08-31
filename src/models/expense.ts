@@ -2,7 +2,7 @@ export interface Expense {
   id: number;
   projectId: number;
   roomId: number;
-  itemTypeId?: number;
+  itemTypeId: number;
   itemName: string;
   cost: number;
   deliveryCost?: number;

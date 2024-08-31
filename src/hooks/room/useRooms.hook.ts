@@ -5,6 +5,7 @@ export function useRooms(projectId: number) {
   const { data: rooms = [] } = useQuery({
     queryKey: ["rooms"],
     queryFn: () => RoomHttpService.fetchRooms(projectId),
+    staleTime: Infinity,
   });
 
   return { rooms };

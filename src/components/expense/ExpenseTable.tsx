@@ -66,7 +66,7 @@ function ExpenseTable({ projectId }: Props) {
       type: "actions",
       headerName: "Akcja",
       width: 100,
-      getActions: ({ id }) => {
+      getActions: ({ id, row }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
         if (isInEditMode) {
@@ -100,7 +100,7 @@ function ExpenseTable({ projectId }: Props) {
           <GridActionsCellItem
             icon={<Delete />}
             label="Delete"
-            onClick={handleDeleteClick(id)}
+            onClick={handleDeleteClick(id, row)}
             color="inherit"
           />,
         ];
@@ -132,9 +132,11 @@ function ExpenseTable({ projectId }: Props) {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (id: GridRowId) => () => {
-    removeExpense({ expenseId: Number(id), projectId });
-  };
+  const handleDeleteClick =
+    (id: GridRowId, { roomId, cost }: GridRowModel<Expense>) =>
+    () => {
+      removeExpense({ expenseId: Number(id), projectId, roomId, cost });
+    };
 
   const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel({
@@ -143,15 +145,20 @@ function ExpenseTable({ projectId }: Props) {
     });
   };
 
-  const processRowUpdate = (updatedExpense: GridRowModel<Expense>) => {
+  const processRowUpdate = (
+    updatedExpense: GridRowModel<Expense>,
+    old: GridRowModel<Expense>
+  ) => {
     updateExpense({
       expenseId: updatedExpense.id,
       projectId,
+      roomId: updatedExpense.roomId,
       updateExpense: {
         cost: updatedExpense.cost,
         itemName: updatedExpense.itemName,
         deliveryCost: updatedExpense.deliveryCost,
       },
+      oldCost: old.cost,
     });
     return updatedExpense;
   };

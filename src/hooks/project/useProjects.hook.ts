@@ -5,6 +5,7 @@ export function useProjects() {
   const { data: projects = [] } = useQuery({
     queryKey: ["projects"],
     queryFn: ProjectHttpService.fetchProjects,
+    staleTime: Infinity,
   });
 
   return { projects };

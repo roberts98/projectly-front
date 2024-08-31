@@ -2,21 +2,30 @@ import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../App";
 import { ExpenseHttpService } from "../../http/expense-http.service";
 import { Expense, UpdateExpense } from "../../models/expense";
-import { refetchPieCharts } from "./useExpensePieChart.hook";
+import { setDataForPieChartForRoom } from "./useExpensePieChart.hook";
 
 interface Data {
   projectId: number;
   expenseId: number;
+  roomId: number;
   updateExpense: UpdateExpense;
+  oldCost: number;
 }
 
 export function useUpdateExpense() {
   const { mutate } = useMutation({
     mutationFn: ({ projectId, expenseId, updateExpense }: Data) =>
       ExpenseHttpService.updateExpense(projectId, expenseId, updateExpense),
-    onSuccess: (_, { projectId, expenseId, updateExpense }) => {
+    onSuccess: (
+      _,
+      { projectId, roomId, expenseId, updateExpense, oldCost }
+    ) => {
       setExpensesData(projectId, expenseId, updateExpense);
-      refetchPieCharts();
+      setDataForPieChartForRoom(
+        projectId,
+        roomId,
+        updateExpense.cost - oldCost
+      );
     },
   });
 

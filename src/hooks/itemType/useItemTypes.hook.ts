@@ -6,6 +6,7 @@ export function useItemTypes(roomId?: number) {
     queryKey: [`item-types-${roomId}`],
     queryFn: () => ItemTypeHttpService.fetchItemTypes(roomId!),
     enabled: !!roomId,
+    staleTime: Infinity,
   });
 
   return { itemTypes };
