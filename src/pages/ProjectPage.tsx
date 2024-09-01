@@ -15,6 +15,7 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import { useProjects } from "../hooks/project/useProjects.hook";
 import ExpenseAccordion from "../components/expense/ExpenseAccordion";
+import { useExpenses } from "../hooks/expense/useExpenses.hook";
 
 function ProjectPage() {
   const { projectId } = useParams();
@@ -31,35 +32,44 @@ function ProjectPage() {
     document.title = `Projekt - ${projectName || projectId}`;
   }, [document, projectId, projects]);
 
+  const { expenses, isLoading } = useExpenses(Number(projectId));
   const { rooms } = useRooms(Number(projectId));
+
+  const isEmptyProject = !isLoading && expenses.length === 0;
 
   return (
     <Box sx={{ padding: 2, mb: 5 }}>
-      <ExpenseAccordion name="Tabela wydatków" defaultExpanded={true}>
-        <ExpenseTable projectId={Number(projectId)} />
-      </ExpenseAccordion>
+      {!isEmptyProject && (
+        <ExpenseAccordion name="Tabela wydatków" defaultExpanded={true}>
+          <ExpenseTable projectId={Number(projectId)} expenses={expenses} />
+        </ExpenseAccordion>
+      )}
       <ExpenseAccordion name="Dodaj nowy przedmiot">
         <ExpenseForm projectId={Number(projectId)} />
       </ExpenseAccordion>
-      <ExpenseAccordion name="Wykres z podziałem na pomieszczenia">
-        <ExpenseForProjectPieChart projectId={Number(projectId)} />
-      </ExpenseAccordion>
-      <ExpenseAccordion name="Wykres z podziałem na typy przdmiotów">
-        {rooms.map((room) => (
-          <Accordion key={room.id}>
-            <AccordionSummary expandIcon={<ExpandMore />}>
-              {room.name}
-            </AccordionSummary>
-            <Divider />
-            <AccordionDetails>
-              <ExpenseForTypePieChart
-                projectId={Number(projectId)}
-                room={room}
-              />
-            </AccordionDetails>
-          </Accordion>
-        ))}
-      </ExpenseAccordion>
+      {!isEmptyProject && (
+        <ExpenseAccordion name="Wykres z podziałem na pomieszczenia">
+          <ExpenseForProjectPieChart projectId={Number(projectId)} />
+        </ExpenseAccordion>
+      )}
+      {!isEmptyProject && (
+        <ExpenseAccordion name="Wykres z podziałem na typy przdmiotów">
+          {rooms.map((room) => (
+            <Accordion key={room.id}>
+              <AccordionSummary expandIcon={<ExpandMore />}>
+                {room.name}
+              </AccordionSummary>
+              <Divider />
+              <AccordionDetails>
+                <ExpenseForTypePieChart
+                  projectId={Number(projectId)}
+                  room={room}
+                />
+              </AccordionDetails>
+            </Accordion>
+          ))}
+        </ExpenseAccordion>
+      )}
     </Box>
   );
 }

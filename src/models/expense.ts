@@ -21,3 +21,8 @@ export interface UpdateExpense {
   cost: number;
   deliveryCost?: number;
 }
+
+export interface ExpenseGrouped {
+  id: number;
+  cost: number;
+}

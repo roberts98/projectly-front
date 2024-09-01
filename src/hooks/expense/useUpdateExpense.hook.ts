@@ -2,12 +2,16 @@ import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../App";
 import { ExpenseHttpService } from "../../http/expense-http.service";
 import { Expense, UpdateExpense } from "../../models/expense";
-import { setDataForPieChartForRoom } from "./useExpensePieChart.hook";
+import {
+  updatePieChartForProject,
+  updatePieChartForRoom,
+} from "./useExpensePieChart.hook";
 
 interface Data {
   projectId: number;
   expenseId: number;
   roomId: number;
+  itemTypeId: number;
   updateExpense: UpdateExpense;
   oldCost: number;
 }
@@ -18,13 +22,15 @@ export function useUpdateExpense() {
       ExpenseHttpService.updateExpense(projectId, expenseId, updateExpense),
     onSuccess: (
       _,
-      { projectId, roomId, expenseId, updateExpense, oldCost }
+      { projectId, roomId, expenseId, itemTypeId, updateExpense, oldCost }
     ) => {
       setExpensesData(projectId, expenseId, updateExpense);
-      setDataForPieChartForRoom(
+      updatePieChartForProject(projectId, roomId, updateExpense.cost - oldCost);
+      updatePieChartForRoom(
         projectId,
         roomId,
-        updateExpense.cost - oldCost
+        updateExpense.cost - oldCost,
+        itemTypeId
       );
     },
   });

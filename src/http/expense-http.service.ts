@@ -1,4 +1,9 @@
-import { Expense, NewExpense, UpdateExpense } from "../models/expense";
+import {
+  Expense,
+  ExpenseGrouped,
+  NewExpense,
+  UpdateExpense,
+} from "../models/expense";
 
 export class ExpenseHttpService {
   public static async fetchExpenses(projectId: number): Promise<Expense[]> {
@@ -11,7 +16,7 @@ export class ExpenseHttpService {
 
   public static async fetchExpensesForProjectPieChart(
     projectId: number
-  ): Promise<[number, number][]> {
+  ): Promise<ExpenseGrouped[]> {
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses/pie-chart`
     );
@@ -22,7 +27,7 @@ export class ExpenseHttpService {
   public static async fetchExpensesForRoomPieChart(
     projectId: number,
     roomId: number
-  ): Promise<[number, number][]> {
+  ): Promise<ExpenseGrouped[]> {
     const response = await fetch(
       `${
         import.meta.env.VITE_API_URL

@@ -2,26 +2,29 @@ import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../App";
 import { ExpenseHttpService } from "../../http/expense-http.service";
 import { Expense } from "../../models/expense";
-import { setDataForPieChartForRoom } from "./useExpensePieChart.hook";
+import {
+  updatePieChartForProject,
+  updatePieChartForRoom,
+} from "./useExpensePieChart.hook";
 
 interface Data {
-  expenseId: number;
-  projectId: number;
-  roomId: number;
-  cost: number;
+  expense: Expense;
 }
 
 export function useRemoveExpense() {
   const { mutate } = useMutation({
-    mutationFn: ({ expenseId, projectId }: Data) =>
-      ExpenseHttpService.removeExpense(projectId, expenseId),
-    onSuccess: (_, { expenseId, projectId, roomId, cost }) => {
+    mutationFn: ({ expense }: Data) =>
+      ExpenseHttpService.removeExpense(expense.projectId, expense.id),
+    onSuccess: (
+      _,
+      { expense: { id, projectId, roomId, cost, itemTypeId } }
+    ) => {
       queryClient.setQueryData(
         [`expenses-${projectId}`],
-        (oldData: Expense[]) =>
-          oldData.filter((expense) => expense.id !== expenseId)
+        (oldData: Expense[]) => oldData.filter((expense) => expense.id !== id)
       );
-      setDataForPieChartForRoom(projectId, roomId, -cost);
+      updatePieChartForProject(projectId, roomId, -cost);
+      updatePieChartForRoom(projectId, roomId, -cost, itemTypeId);
     },
   });
 

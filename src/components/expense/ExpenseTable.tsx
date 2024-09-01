@@ -11,7 +11,6 @@ import {
   GridRowModesModel,
 } from "@mui/x-data-grid";
 import { useState } from "react";
-import { useExpenses } from "../../hooks/expense/useExpenses.hook";
 import { useRemoveExpense } from "../../hooks/expense/useRemoveExpense.hook";
 import { useUpdateExpense } from "../../hooks/expense/useUpdateExpense.hook";
 import { useAllItemTypes } from "../../hooks/itemType/useAllItemTypes.hook";
@@ -19,10 +18,10 @@ import { Expense } from "../../models/expense";
 
 interface Props {
   projectId: number;
+  expenses: Expense[];
 }
 
-function ExpenseTable({ projectId }: Props) {
-  const { expenses } = useExpenses(Number(projectId));
+function ExpenseTable({ projectId, expenses }: Props) {
   const { removeExpense } = useRemoveExpense();
   const { updateExpense } = useUpdateExpense();
   const { itemTypes } = useAllItemTypes();
@@ -100,7 +99,7 @@ function ExpenseTable({ projectId }: Props) {
           <GridActionsCellItem
             icon={<Delete />}
             label="Delete"
-            onClick={handleDeleteClick(id, row)}
+            onClick={handleDeleteClick(row)}
             color="inherit"
           />,
         ];
@@ -132,11 +131,9 @@ function ExpenseTable({ projectId }: Props) {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick =
-    (id: GridRowId, { roomId, cost }: GridRowModel<Expense>) =>
-    () => {
-      removeExpense({ expenseId: Number(id), projectId, roomId, cost });
-    };
+  const handleDeleteClick = (expense: GridRowModel<Expense>) => () => {
+    removeExpense({ expense });
+  };
 
   const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel({
@@ -153,6 +150,7 @@ function ExpenseTable({ projectId }: Props) {
       expenseId: updatedExpense.id,
       projectId,
       roomId: updatedExpense.roomId,
+      itemTypeId: old.itemTypeId,
       updateExpense: {
         cost: updatedExpense.cost,
         itemName: updatedExpense.itemName,

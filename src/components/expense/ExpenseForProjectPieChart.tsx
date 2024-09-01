@@ -10,10 +10,13 @@ function ExpenseForProjectPieChart({ projectId }: Props) {
   const { data } = useExpenseForProjectPieChart(projectId);
   const { rooms } = useRooms(projectId);
 
-  const chartData = data.map((row, idx) => {
-    const [roomId, roomCost] = row;
-    const roomName = rooms.find((room) => room.id === Number(roomId))?.name;
-    return { id: idx, value: roomCost, label: roomName || "Ogólne" };
+  const chartData = data.map(({ id, cost }, idx) => {
+    const roomName = rooms.find((room) => room.id === Number(id))?.name;
+    return {
+      id: idx,
+      value: cost,
+      label: roomName || "Ogólne",
+    };
   });
 
   return (

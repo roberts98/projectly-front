@@ -12,14 +12,11 @@ function ExpenseForTypePieChart({ projectId, room }: Props) {
   const { data } = useExpenseForRoomPieChart(projectId, room.id);
   const { itemTypes } = useItemTypes(room.id);
 
-  const chartData = data.map((row, idx) => {
-    const [itemTypeId, totalCost] = row;
-    const itemTypeName = itemTypes.find(
-      (itemType) => itemType.id === itemTypeId
-    )?.name;
+  const chartData = data.map(({ id, cost }, idx) => {
+    const itemTypeName = itemTypes.find((itemType) => itemType.id === id)?.name;
     return {
       id: idx,
-      value: totalCost,
+      value: cost,
       label: itemTypeName || "Ogólne",
     };
   });

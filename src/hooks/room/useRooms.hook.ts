@@ -3,7 +3,7 @@ import { RoomHttpService } from "../../http/room-http.service";
 
 export function useRooms(projectId: number) {
   const { data: rooms = [] } = useQuery({
-    queryKey: ["rooms"],
+    queryKey: [`rooms-${projectId}`],
     queryFn: () => RoomHttpService.fetchRooms(projectId),
     staleTime: Infinity,
   });
