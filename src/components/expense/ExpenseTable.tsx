@@ -15,6 +15,7 @@ import { useRemoveExpense } from "../../hooks/expense/useRemoveExpense.hook";
 import { useUpdateExpense } from "../../hooks/expense/useUpdateExpense.hook";
 import { useAllItemTypes } from "../../hooks/itemType/useAllItemTypes.hook";
 import { Expense } from "../../models/expense";
+import ComponentLoader from "../shared/ComponentLoader";
 
 interface Props {
   projectId: number;
@@ -24,7 +25,7 @@ interface Props {
 function ExpenseTable({ projectId, expenses }: Props) {
   const { removeExpense } = useRemoveExpense();
   const { updateExpense } = useUpdateExpense();
-  const { itemTypes } = useAllItemTypes();
+  const { itemTypes, isLoading } = useAllItemTypes();
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const columns: GridColDef[] = [
     {
@@ -166,25 +167,27 @@ function ExpenseTable({ projectId, expenses }: Props) {
   };
 
   return (
-    <DataGrid
-      style={{ width: "100%" }}
-      rows={rows}
-      columns={columns}
-      rowModesModel={rowModesModel}
-      onRowModesModelChange={handleRowModesModelChange}
-      onRowEditStop={handleRowEditStop}
-      processRowUpdate={processRowUpdate}
-      editMode="row"
-      pageSizeOptions={[
-        { label: "10", value: 10 },
-        { label: "20", value: 20 },
-      ]}
-      initialState={{
-        pagination: {
-          paginationModel: { pageSize: 10, page: 2 },
-        },
-      }}
-    />
+    <ComponentLoader active={isLoading}>
+      <DataGrid
+        style={{ width: "100%" }}
+        rows={rows}
+        columns={columns}
+        rowModesModel={rowModesModel}
+        onRowModesModelChange={handleRowModesModelChange}
+        onRowEditStop={handleRowEditStop}
+        processRowUpdate={processRowUpdate}
+        editMode="row"
+        pageSizeOptions={[
+          { label: "10", value: 10 },
+          { label: "20", value: 20 },
+        ]}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 10, page: 2 },
+          },
+        }}
+      />
+    </ComponentLoader>
   );
 }
 
