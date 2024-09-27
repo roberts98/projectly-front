@@ -2,7 +2,9 @@ export interface Expense {
   id: number;
   projectId: number;
   roomId: number;
+  room: string;
   itemTypeId: number;
+  itemType: string;
   itemName: string;
   cost: number;
   deliveryCost?: number;
@@ -10,7 +12,9 @@ export interface Expense {
 
 export interface NewExpense {
   roomId: number;
+  room: string;
   itemTypeId: number;
+  itemType: string;
   itemName: string;
   cost: number;
   deliveryCost?: number;

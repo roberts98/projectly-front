@@ -1,22 +1,15 @@
+import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ExpenseAccordion from "../components/expense/ExpenseAccordion";
 import ExpenseForm from "../components/expense/ExpenseForm";
 import ExpenseForProjectPieChart from "../components/expense/ExpenseForProjectPieChart";
 import ExpenseForTypePieChart from "../components/expense/ExpenseForTypePieChart";
 import ExpenseTable from "../components/expense/ExpenseTable";
-import { useRooms } from "../hooks/room/useRooms.hook";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Divider,
-} from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
-import { useProjects } from "../hooks/project/useProjects.hook";
-import ExpenseAccordion from "../components/expense/ExpenseAccordion";
-import { useExpenses } from "../hooks/expense/useExpenses.hook";
 import PageLoader from "../components/shared/PageLoader";
+import { useExpenses } from "../hooks/expense/useExpenses.hook";
+import { useProjects } from "../hooks/project/useProjects.hook";
+import { useRooms } from "../hooks/room/useRooms.hook";
 
 function ProjectPage() {
   const { projectId } = useParams();
@@ -57,18 +50,12 @@ function ProjectPage() {
         {!isEmptyProject && (
           <ExpenseAccordion name="Wykres z podziałem na typy przdmiotów">
             {rooms.map((room) => (
-              <Accordion key={room.id}>
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  {room.name}
-                </AccordionSummary>
-                <Divider />
-                <AccordionDetails>
-                  <ExpenseForTypePieChart
-                    projectId={Number(projectId)}
-                    room={room}
-                  />
-                </AccordionDetails>
-              </Accordion>
+              <ExpenseAccordion key={room.id} name={room.name}>
+                <ExpenseForTypePieChart
+                  projectId={Number(projectId)}
+                  room={room}
+                />
+              </ExpenseAccordion>
             ))}
           </ExpenseAccordion>
         )}

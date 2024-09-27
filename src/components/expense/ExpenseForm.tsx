@@ -26,9 +26,11 @@ function ExpenseForm({ projectId }: Props) {
   function onSubmit(formValues: FieldValues) {
     const { roomId, itemTypeId, itemName, cost, deliveryCost } = formValues;
     const expense: NewExpense = {
-      roomId: roomId || undefined,
+      roomId: roomId,
+      room: rooms.find((room) => room.id == roomId)!.name,
       itemName,
       itemTypeId: itemTypeId,
+      itemType: itemTypes.find((itemType) => itemType.id === itemTypeId)!.name,
       cost: Number(cost),
       deliveryCost: Number(deliveryCost) || undefined,
     };
