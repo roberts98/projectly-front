@@ -31,6 +31,11 @@ function ExpenseTable({ projectId, expenses }: Props) {
       width: 50,
     },
     {
+      field: "buyDate",
+      headerName: "Data kupna",
+      width: 200,
+    },
+    {
       field: "itemName",
       headerName: "Nazwa",
       width: 400,

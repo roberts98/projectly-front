@@ -18,6 +18,7 @@ export interface NewExpense {
   itemName: string;
   cost: number;
   deliveryCost?: number;
+  buyDate: string;
 }
 
 export interface UpdateExpense {

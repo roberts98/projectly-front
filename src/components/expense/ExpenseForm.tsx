@@ -6,11 +6,13 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { FieldValues, useForm } from "react-hook-form";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 import { useCreateExpense } from "../../hooks/expense/useCreateExpense.hook";
 import { useRooms } from "../../hooks/room/useRooms.hook";
 import { NewExpense } from "../../models/expense";
 import { useItemTypes } from "../../hooks/itemType/useItemTypes.hook";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 interface Props {
   projectId: number;
@@ -18,13 +20,14 @@ interface Props {
 
 function ExpenseForm({ projectId }: Props) {
   const { rooms } = useRooms(projectId);
-  const { register, handleSubmit, reset, watch } = useForm();
+  const { control, register, handleSubmit, reset, watch } = useForm();
   const { createExpense } = useCreateExpense();
   const selectedRoomId: number | undefined = watch("roomId");
   const { itemTypes } = useItemTypes(selectedRoomId);
 
   function onSubmit(formValues: FieldValues) {
-    const { roomId, itemTypeId, itemName, cost, deliveryCost } = formValues;
+    const { roomId, itemTypeId, itemName, cost, deliveryCost, buyDate } =
+      formValues;
     const expense: NewExpense = {
       roomId: roomId,
       room: rooms.find((room) => room.id == roomId)!.name,
@@ -33,6 +36,7 @@ function ExpenseForm({ projectId }: Props) {
       itemType: itemTypes.find((itemType) => itemType.id === itemTypeId)!.name,
       cost: Number(cost),
       deliveryCost: Number(deliveryCost) || undefined,
+      buyDate: dayjs(buyDate).format("YYYY-MM-DD"),
     };
     createExpense({ expense, projectId });
     reset();
@@ -40,6 +44,19 @@ function ExpenseForm({ projectId }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        control={control}
+        name="buyDate"
+        rules={{ required: true }}
+        render={({ field }) => (
+          <DatePicker
+            label="Data kupna"
+            value={field.value}
+            inputRef={field.ref}
+            onChange={field.onChange}
+          />
+        )}
+      />
       <TextField
         variant="outlined"
         label="Nazwa przedmiotu"
