@@ -188,9 +188,6 @@ function ExpenseTable({ projectId, expenses }: Props) {
         pagination: {
           paginationModel: { pageSize: 10, page: 0 },
         },
-        sorting: {
-          sortModel: [{ field: "buyDate", sort: "desc" }],
-        },
       }}
     />
   );
