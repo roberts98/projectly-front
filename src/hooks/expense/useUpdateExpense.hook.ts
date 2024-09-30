@@ -4,14 +4,14 @@ import { ExpenseHttpService } from "../../http/expense-http.service";
 import { Expense, UpdateExpense } from "../../models/expense";
 import {
   updatePieChartForProject,
-  updatePieChartForRoom,
+  updatePieChartForCategory,
 } from "./useExpensePieChart.hook";
 
 interface Data {
   projectId: number;
   expenseId: number;
-  roomId: number;
-  itemTypeId: number;
+  categoryId: number;
+  subcategoryId: number;
   updateExpense: UpdateExpense;
   oldCost: number;
 }
@@ -22,15 +22,26 @@ export function useUpdateExpense() {
       ExpenseHttpService.updateExpense(projectId, expenseId, updateExpense),
     onSuccess: (
       _,
-      { projectId, roomId, expenseId, itemTypeId, updateExpense, oldCost }
+      {
+        projectId,
+        categoryId,
+        expenseId,
+        subcategoryId,
+        updateExpense,
+        oldCost,
+      }
     ) => {
       setExpensesData(projectId, expenseId, updateExpense);
-      updatePieChartForProject(projectId, roomId, updateExpense.cost - oldCost);
-      updatePieChartForRoom(
+      updatePieChartForProject(
         projectId,
-        roomId,
+        categoryId,
+        updateExpense.cost - oldCost
+      );
+      updatePieChartForCategory(
+        projectId,
+        categoryId,
         updateExpense.cost - oldCost,
-        itemTypeId
+        subcategoryId
       );
     },
   });

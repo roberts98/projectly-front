@@ -15,7 +15,7 @@ function Navbar() {
           Strona główna
         </Link>
         <Link
-          to="/rooms/create"
+          to="/categories/create"
           color="#fff"
           underline="none"
           component={RouterLink}

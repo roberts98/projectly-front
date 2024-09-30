@@ -4,7 +4,7 @@ import { ExpenseHttpService } from "../../http/expense-http.service";
 import { Expense, NewExpense } from "../../models/expense";
 import {
   updatePieChartForProject,
-  updatePieChartForRoom,
+  updatePieChartForCategory,
 } from "./useExpensePieChart.hook";
 
 interface Data {
@@ -24,12 +24,12 @@ export function useCreateExpense() {
           { ...expense, id, projectId },
         ]
       );
-      updatePieChartForProject(projectId, expense.roomId, expense.cost);
-      updatePieChartForRoom(
+      updatePieChartForProject(projectId, expense.categoryId, expense.cost);
+      updatePieChartForCategory(
         projectId,
-        expense.roomId,
+        expense.categoryId,
         expense.cost,
-        expense.itemTypeId
+        expense.subcategoryId
       );
     },
   });

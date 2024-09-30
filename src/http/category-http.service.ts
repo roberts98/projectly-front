@@ -1,20 +1,20 @@
-import { Room } from "../models/room";
+import { Category } from "../models/category";
 
-export class RoomHttpService {
-  public static async fetchRooms(projectId: number): Promise<Room[]> {
+export class CategoryHttpService {
+  public static async fetchCategories(projectId: number): Promise<Category[]> {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/projects/${projectId}/rooms`
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/categories`
     );
     const json = await response.json();
     return json.data;
   }
 
-  public static async createRoom(
+  public static async createCategory(
     projectId: number,
     name: string
   ): Promise<number> {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/projects/${projectId}/rooms`,
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/categories`,
       {
         method: "POST",
         body: JSON.stringify({ name }),

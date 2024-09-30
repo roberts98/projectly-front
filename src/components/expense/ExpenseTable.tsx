@@ -42,12 +42,12 @@ function ExpenseTable({ projectId, expenses }: Props) {
       editable: true,
     },
     {
-      field: "room",
+      field: "category",
       headerName: "Pokój",
       width: 400,
     },
     {
-      field: "itemType",
+      field: "subcategory",
       headerName: "Typ przedmiotu",
       width: 400,
     },
@@ -153,8 +153,8 @@ function ExpenseTable({ projectId, expenses }: Props) {
     updateExpense({
       expenseId: updatedExpense.id,
       projectId,
-      roomId: updatedExpense.roomId,
-      itemTypeId: old.itemTypeId,
+      categoryId: updatedExpense.categoryId,
+      subcategoryId: old.subcategoryId,
       updateExpense: {
         cost: updatedExpense.cost,
         itemName: updatedExpense.itemName,

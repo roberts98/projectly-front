@@ -24,14 +24,14 @@ export class ExpenseHttpService {
     return json.data;
   }
 
-  public static async fetchExpensesForRoomPieChart(
+  public static async fetchExpensesForCategoryPieChart(
     projectId: number,
-    roomId: number
+    categoryId: number
   ): Promise<ExpenseGrouped[]> {
     const response = await fetch(
       `${
         import.meta.env.VITE_API_URL
-      }/projects/${projectId}/rooms/${roomId}/expenses/pie-chart`
+      }/projects/${projectId}/categories/${categoryId}/expenses/pie-chart`
     );
     const json = await response.json();
     return json.data;

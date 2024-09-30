@@ -4,7 +4,7 @@ import { ExpenseHttpService } from "../../http/expense-http.service";
 import { Expense } from "../../models/expense";
 import {
   updatePieChartForProject,
-  updatePieChartForRoom,
+  updatePieChartForCategory,
 } from "./useExpensePieChart.hook";
 
 interface Data {
@@ -17,14 +17,14 @@ export function useRemoveExpense() {
       ExpenseHttpService.removeExpense(expense.projectId, expense.id),
     onSuccess: (
       _,
-      { expense: { id, projectId, roomId, cost, itemTypeId } }
+      { expense: { id, projectId, categoryId, cost, subcategoryId } }
     ) => {
       queryClient.setQueryData(
         [`expenses-${projectId}`],
         (oldData: Expense[]) => oldData.filter((expense) => expense.id !== id)
       );
-      updatePieChartForProject(projectId, roomId, -cost);
-      updatePieChartForRoom(projectId, roomId, -cost, itemTypeId);
+      updatePieChartForProject(projectId, categoryId, -cost);
+      updatePieChartForCategory(projectId, categoryId, -cost, subcategoryId);
     },
   });
 

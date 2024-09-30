@@ -3,11 +3,17 @@ import { queryClient } from "../../App";
 import { ExpenseHttpService } from "../../http/expense-http.service";
 import { ExpenseGrouped } from "../../models/expense";
 
-export function useExpenseForRoomPieChart(projectId: number, roomId: number) {
+export function useExpenseForCategoryPieChart(
+  projectId: number,
+  categoryId: number
+) {
   const { data = [] } = useQuery({
-    queryKey: [`expenses-pie-chart-${roomId}-${projectId}`],
+    queryKey: [`expenses-pie-chart-${categoryId}-${projectId}`],
     queryFn: () =>
-      ExpenseHttpService.fetchExpensesForRoomPieChart(projectId, roomId),
+      ExpenseHttpService.fetchExpensesForCategoryPieChart(
+        projectId,
+        categoryId
+      ),
     staleTime: Infinity,
   });
 
@@ -27,26 +33,26 @@ export function useExpenseForProjectPieChart(projectId: number) {
 
 export function updatePieChartForProject(
   projectId: number,
-  roomId: number,
+  categoryId: number,
   cost: number
 ) {
   queryClient.setQueryData(
     [`expenses-pie-chart-${projectId}`],
     (oldData: ExpenseGrouped[]): ExpenseGrouped[] =>
-      updatePieChartData(oldData, roomId, cost)
+      updatePieChartData(oldData, categoryId, cost)
   );
 }
 
-export function updatePieChartForRoom(
+export function updatePieChartForCategory(
   projectId: number,
-  roomId: number,
+  categoryId: number,
   cost: number,
-  itemTypeId: number
+  subcategoryId: number
 ) {
   queryClient.setQueryData(
-    [`expenses-pie-chart-${roomId}-${projectId}`],
+    [`expenses-pie-chart-${categoryId}-${projectId}`],
     (oldData: ExpenseGrouped[]): ExpenseGrouped[] =>
-      updatePieChartData(oldData, itemTypeId, cost)
+      updatePieChartData(oldData, subcategoryId, cost)
   );
 }
 

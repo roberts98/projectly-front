@@ -1,16 +1,16 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { useProjects } from "../../hooks/project/useProjects.hook";
-import { useCreateRoom } from "../../hooks/room/useCreateRoom.hook";
+import { useCreateCategory } from "../../hooks/category/useCreateCategoryhook";
 
-function RoomForm() {
+function CategoryForm() {
   const { projects } = useProjects();
   const { register, handleSubmit, reset } = useForm();
-  const { createRoom } = useCreateRoom();
+  const { createCategory } = useCreateCategory();
 
   function onSubmit(formValues: FieldValues) {
     const { name, projectId } = formValues;
 
-    createRoom({ name, projectId });
+    createCategory({ name, projectId });
     reset();
   }
 
@@ -34,4 +34,4 @@ function RoomForm() {
   );
 }
 
-export default RoomForm;
+export default CategoryForm;

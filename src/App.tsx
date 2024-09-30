@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import { BootstrapHttpService } from "./http/bootstrap-http.service";
-import CreateRoomPage from "./pages/CreateRoomPage";
 import ProjectPage from "./pages/ProjectPage";
 import ProjectsPage from "./pages/ProjectsPage";
+import CreateCategoryPage from "./pages/CreateCategoryPage";
 
 export const queryClient = new QueryClient();
 
@@ -30,7 +30,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ProjectsPage />} />
             <Route path="/projects/:projectId" element={<ProjectPage />} />
-            <Route path="/rooms/create" element={<CreateRoomPage />} />
+            <Route path="/categories/create" element={<CreateCategoryPage />} />
           </Routes>
         </HashRouter>
       </LocalizationProvider>

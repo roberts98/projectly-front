@@ -9,7 +9,7 @@ import ExpenseTable from "../components/expense/ExpenseTable";
 import PageLoader from "../components/shared/PageLoader";
 import { useExpenses } from "../hooks/expense/useExpenses.hook";
 import { useProjects } from "../hooks/project/useProjects.hook";
-import { useRooms } from "../hooks/room/useRooms.hook";
+import { useCategories } from "../hooks/category/useCategories.hook";
 
 function ProjectPage() {
   const { projectId } = useParams();
@@ -27,7 +27,7 @@ function ProjectPage() {
   }, [document, projectId, projects]);
 
   const { expenses, isLoading } = useExpenses(Number(projectId));
-  const { rooms } = useRooms(Number(projectId));
+  const { categories } = useCategories(Number(projectId));
 
   const isEmptyProject = !isLoading && expenses.length === 0;
 
@@ -49,11 +49,11 @@ function ProjectPage() {
         )}
         {!isEmptyProject && (
           <ExpenseAccordion name="Wykres z podziałem na typy przdmiotów">
-            {rooms.map((room) => (
-              <ExpenseAccordion key={room.id} name={room.name}>
+            {categories.map((category) => (
+              <ExpenseAccordion key={category.id} name={category.name}>
                 <ExpenseForTypePieChart
                   projectId={Number(projectId)}
-                  room={room}
+                  category={category}
                 />
               </ExpenseAccordion>
             ))}

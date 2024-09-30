@@ -1,20 +1,20 @@
 export interface Expense {
   id: number;
   projectId: number;
-  roomId: number;
-  room: string;
-  itemTypeId: number;
-  itemType: string;
+  categoryId: number;
+  category: string;
+  subcategoryId: number;
+  subcategory: string;
   itemName: string;
   cost: number;
   deliveryCost?: number;
 }
 
 export interface NewExpense {
-  roomId: number;
-  room: string;
-  itemTypeId: number;
-  itemType: string;
+  categoryId: number;
+  category: string;
+  subcategoryId: number;
+  subcategory: string;
   itemName: string;
   cost: number;
   deliveryCost?: number;

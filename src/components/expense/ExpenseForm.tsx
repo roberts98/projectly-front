@@ -8,32 +8,34 @@ import {
 } from "@mui/material";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { useCreateExpense } from "../../hooks/expense/useCreateExpense.hook";
-import { useRooms } from "../../hooks/room/useRooms.hook";
+import { useCategories } from "../../hooks/category/useCategories.hook";
 import { NewExpense } from "../../models/expense";
-import { useItemTypes } from "../../hooks/itemType/useItemTypes.hook";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import { useSubcategories } from "../../hooks/subcategory/useSubcategories.hook";
 
 interface Props {
   projectId: number;
 }
 
 function ExpenseForm({ projectId }: Props) {
-  const { rooms } = useRooms(projectId);
+  const { categories } = useCategories(projectId);
   const { control, register, handleSubmit, reset, watch } = useForm();
   const { createExpense } = useCreateExpense();
-  const selectedRoomId: number | undefined = watch("roomId");
-  const { itemTypes } = useItemTypes(selectedRoomId);
+  const selectedcategoryId: number | undefined = watch("categoryId");
+  const { subcategories } = useSubcategories(selectedcategoryId);
 
   function onSubmit(formValues: FieldValues) {
-    const { roomId, itemTypeId, itemName, cost, deliveryCost, buyDate } =
+    const { categoryId, subcategoryId, itemName, cost, deliveryCost, buyDate } =
       formValues;
     const expense: NewExpense = {
-      roomId: roomId,
-      room: rooms.find((room) => room.id == roomId)!.name,
+      categoryId: categoryId,
+      category: categories.find((category) => category.id == categoryId)!.name,
       itemName,
-      itemTypeId: itemTypeId,
-      itemType: itemTypes.find((itemType) => itemType.id === itemTypeId)!.name,
+      subcategoryId: subcategoryId,
+      subcategory: subcategories.find(
+        (subcategory) => subcategory.id === subcategoryId
+      )!.name,
       cost: Number(cost),
       deliveryCost: Number(deliveryCost) || undefined,
       buyDate: dayjs(buyDate).format("YYYY-MM-DD"),
@@ -65,18 +67,18 @@ function ExpenseForm({ projectId }: Props) {
         sx={{ mr: 1 }}
       />
       <FormControl variant="outlined" sx={{ minWidth: 120, mr: 1 }}>
-        <InputLabel id="room-label">Pokój *</InputLabel>
+        <InputLabel id="category-label">Pokój *</InputLabel>
         <Select
-          labelId="room-label"
-          id="room"
+          labelId="category-label"
+          id="category"
           label="Pokój"
-          inputProps={register("roomId")}
+          inputProps={register("categoryId")}
           defaultValue={""}
           required
         >
-          {rooms.map((room) => (
-            <MenuItem key={room.id} value={room.id}>
-              {room.name}
+          {categories.map((category) => (
+            <MenuItem key={category.id} value={category.id}>
+              {category.name}
             </MenuItem>
           ))}
         </Select>
@@ -87,14 +89,14 @@ function ExpenseForm({ projectId }: Props) {
           labelId="item-type-label"
           id="item type"
           label="Typ przedmiotu"
-          inputProps={register("itemTypeId")}
+          inputProps={register("subcategoryId")}
           defaultValue={""}
           required
-          disabled={!selectedRoomId}
+          disabled={!selectedcategoryId}
         >
-          {itemTypes.map((itemType) => (
-            <MenuItem key={itemType.id} value={itemType.id}>
-              {itemType.name}
+          {subcategories.map((subcategory) => (
+            <MenuItem key={subcategory.id} value={subcategory.id}>
+              {subcategory.name}
             </MenuItem>
           ))}
         </Select>
