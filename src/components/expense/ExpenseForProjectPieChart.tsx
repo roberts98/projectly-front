@@ -1,23 +1,20 @@
 import { PieChart } from "@mui/x-charts";
-import { useCategories } from "../../hooks/category/useCategories.hook";
-import { useExpenseForProjectPieChart } from "../../hooks/expense/useExpensePieChart.hook";
+import _ from "lodash";
+import { Expense } from "../../models/expense";
 
 interface Props {
-  projectId: number;
+  expenses: Expense[];
 }
 
-function ExpenseForProjectPieChart({ projectId }: Props) {
-  const { data } = useExpenseForProjectPieChart(projectId);
-  const { categories } = useCategories(projectId);
-
-  const chartData = data.map(({ id, cost }, idx) => {
-    const categoryName = categories.find(
-      (category) => category.id === Number(id)
-    )?.name;
+function ExpenseForProjectPieChart({ expenses }: Props) {
+  const groupedExpenses = _.groupBy(expenses, (expense) => expense.categoryId);
+  const data = Object.keys(groupedExpenses).map((key) => {
+    const grouped = groupedExpenses[key];
+    const totalCost = grouped.reduce((acc, current) => acc + current.cost, 0);
     return {
-      id: idx,
-      value: cost,
-      label: categoryName || "Ogólne",
+      id: parseInt(key),
+      value: totalCost,
+      label: grouped[0].category,
     };
   });
 
@@ -25,7 +22,7 @@ function ExpenseForProjectPieChart({ projectId }: Props) {
     <PieChart
       series={[
         {
-          data: chartData,
+          data,
         },
       ]}
       width={400}

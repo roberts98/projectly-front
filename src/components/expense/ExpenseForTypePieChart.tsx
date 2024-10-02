@@ -1,25 +1,23 @@
 import { PieChart } from "@mui/x-charts";
-import { useExpenseForCategoryPieChart } from "../../hooks/expense/useExpensePieChart.hook";
-import { useSubcategories } from "../../hooks/subcategory/useSubcategories.hook";
-import { Category } from "../../models/category";
+import { Expense } from "../../models/expense";
+import _ from "lodash";
 
 interface Props {
-  projectId: number;
-  category: Category;
+  expenses: Expense[];
 }
 
-function ExpenseForTypePieChart({ projectId, category }: Props) {
-  const { data } = useExpenseForCategoryPieChart(projectId, category.id);
-  const { subcategories } = useSubcategories(category.id);
-
-  const chartData = data.map(({ id, cost }, idx) => {
-    const subcategoryName = subcategories.find(
-      (subcategory) => subcategory.id === id
-    )?.name;
+function ExpenseForTypePieChart({ expenses }: Props) {
+  const groupedExpenses = _.groupBy(
+    expenses,
+    (expense) => expense.subcategoryId
+  );
+  const data = Object.keys(groupedExpenses).map((key) => {
+    const grouped = groupedExpenses[key];
+    const totalCost = _.sumBy(grouped, "cost");
     return {
-      id: idx,
-      value: cost,
-      label: subcategoryName || "Ogólne",
+      id: parseInt(key),
+      value: totalCost,
+      label: grouped[0].subcategory,
     };
   });
 
@@ -27,7 +25,7 @@ function ExpenseForTypePieChart({ projectId, category }: Props) {
     <PieChart
       series={[
         {
-          data: chartData,
+          data,
         },
       ]}
       width={400}

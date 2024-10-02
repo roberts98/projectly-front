@@ -9,23 +9,25 @@ import PageLoader from "../components/shared/PageLoader";
 import { useExpenses } from "../hooks/expense/useExpenses.hook";
 import { useProjects } from "../hooks/project/useProjects.hook";
 import { usePassphraseStore } from "../store/project-auth-store";
+import ExpenseForProjectPieChart from "../components/expense/ExpenseForProjectPieChart";
+import ExpenseForTypePieChart from "../components/expense/ExpenseForTypePieChart";
+import { useCategories } from "../hooks/category/useCategories.hook";
 
 function ProjectPage() {
   const { projectId: projectIdString } = useParams();
   const { projects, isLoading: areProjectsLoading } = useProjects();
   const projectId = Number(projectIdString);
-
   const project = projects.find((project) => project.id === projectId);
   const passphraseInStore = usePassphraseStore((state) =>
     state.passphrases.find((x) => x.projectId === projectId)
   );
-
   const { expenses, isLoading } = useExpenses(
     projectId,
     !!project?.isEncrypted,
     !areProjectsLoading,
     passphraseInStore?.passphrase
   );
+  const { categories } = useCategories(projectId);
 
   useEffect(() => {
     document.title = `Projekt - ${project?.name || projectId}`;
@@ -55,10 +57,9 @@ function ProjectPage() {
             passphrase={passphraseInStore?.passphrase}
           />
         </ExpenseAccordion>
-        {/* Uncomment and implement as needed
         {!isEmptyProject && (
           <ExpenseAccordion name="Wykres z podziałem na pomieszczenia">
-            <ExpenseForProjectPieChart projectId={projectId} />
+            <ExpenseForProjectPieChart expenses={expenses} />
           </ExpenseAccordion>
         )}
         {!isEmptyProject && (
@@ -66,14 +67,14 @@ function ProjectPage() {
             {categories.map((category) => (
               <ExpenseAccordion key={category.id} name={category.name}>
                 <ExpenseForTypePieChart
-                  projectId={projectId}
-                  category={category}
+                  expenses={expenses.filter(
+                    (expense) => expense.categoryId === category.id
+                  )}
                 />
               </ExpenseAccordion>
             ))}
           </ExpenseAccordion>
         )}
-        */}
       </Box>
     </PageLoader>
   );
