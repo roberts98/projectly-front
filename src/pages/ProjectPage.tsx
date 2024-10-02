@@ -16,8 +16,9 @@ import { useCategories } from "../hooks/category/useCategories.hook";
 function ProjectPage() {
   const { projectId: projectIdString } = useParams();
   const { projects, isLoading: areProjectsLoading } = useProjects();
+  const allProjects = [...projects.personal, ...projects.shared];
   const projectId = Number(projectIdString);
-  const project = projects.find((project) => project.id === projectId);
+  const project = allProjects.find((project) => project.id === projectId);
   const passphraseInStore = usePassphraseStore((state) =>
     state.passphrases.find((x) => x.projectId === projectId)
   );
@@ -33,7 +34,7 @@ function ProjectPage() {
     document.title = `Projekt - ${project?.name || projectId}`;
   }, [project]);
 
-  if (!projectId || projects.length === 0 || isLoading) {
+  if (!projectId || allProjects.length === 0 || isLoading) {
     return null;
   }
 

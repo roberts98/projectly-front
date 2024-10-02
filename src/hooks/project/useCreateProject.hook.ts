@@ -14,7 +14,7 @@ export function useCreateProject() {
         ["projects"],
         (oldData: Project[]): Project[] => [
           ...oldData,
-          { id, name, isEncrypted: !!passphrase },
+          { id, name, isEncrypted: !!passphrase, isPersonal: true },
         ]
       );
       navigate("/#");

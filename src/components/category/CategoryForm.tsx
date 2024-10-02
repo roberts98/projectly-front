@@ -3,7 +3,9 @@ import { useProjects } from "../../hooks/project/useProjects.hook";
 import { useCreateCategory } from "../../hooks/category/useCreateCategoryhook";
 
 function CategoryForm() {
-  const { projects } = useProjects();
+  const {
+    projects: { personal },
+  } = useProjects();
   const { register, handleSubmit, reset } = useForm();
   const { createCategory } = useCreateCategory();
 
@@ -23,7 +25,7 @@ function CategoryForm() {
         required
       />
       <select {...register("projectId")} required>
-        {projects.map((project) => (
+        {personal.map((project) => (
           <option key={project.id} value={project.id}>
             {project.name}
           </option>

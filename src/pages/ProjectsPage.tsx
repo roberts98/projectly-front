@@ -4,7 +4,10 @@ import { useProjects } from "../hooks/project/useProjects.hook";
 import PageLoader from "../components/shared/PageLoader";
 
 function ProjectsPage() {
-  const { projects, isLoading } = useProjects();
+  const {
+    projects: { personal, shared },
+    isLoading,
+  } = useProjects();
 
   useEffect(() => {
     document.title = "Projekty";
@@ -12,7 +15,14 @@ function ProjectsPage() {
 
   return (
     <PageLoader active={isLoading}>
-      {projects.map((project) => (
+      <h2>Twoje projekty</h2>
+      {personal.map((project) => (
+        <div key={project.id}>
+          <Link to={`/projects/${project.id}`}>{project.name}</Link>
+        </div>
+      ))}
+      <h2>Publiczne projekty</h2>
+      {shared.map((project) => (
         <div key={project.id}>
           <Link to={`/projects/${project.id}`}>{project.name}</Link>
         </div>

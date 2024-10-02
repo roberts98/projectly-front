@@ -1,8 +1,8 @@
-import { NewProject, Project } from "../models/project";
+import { NewProject, ProjectsDto } from "../models/project";
 import { ProjectPassphrase } from "../store/project-auth-store";
 
 export class ProjectHttpService {
-  public static async fetchProjects(): Promise<Project[]> {
+  public static async fetchProjects(): Promise<ProjectsDto> {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/projects`, {
       credentials: "include",
     });
