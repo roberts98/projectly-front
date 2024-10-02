@@ -6,9 +6,17 @@ import {
 } from "../models/expense";
 
 export class ExpenseHttpService {
-  public static async fetchExpenses(projectId: number): Promise<Expense[]> {
+  public static async fetchExpenses(
+    projectId: number,
+    passphrase?: string
+  ): Promise<Expense[]> {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses`
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses/get`,
+      {
+        method: "POST",
+        body: JSON.stringify({ passphrase }),
+        credentials: "include",
+      }
     );
     const json = await response.json();
     return json.data;
@@ -18,7 +26,10 @@ export class ExpenseHttpService {
     projectId: number
   ): Promise<ExpenseGrouped[]> {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses/pie-chart`
+      `${
+        import.meta.env.VITE_API_URL
+      }/projects/${projectId}/expenses/pie-chart`,
+      { credentials: "include" }
     );
     const json = await response.json();
     return json.data;
@@ -31,7 +42,8 @@ export class ExpenseHttpService {
     const response = await fetch(
       `${
         import.meta.env.VITE_API_URL
-      }/projects/${projectId}/categories/${categoryId}/expenses/pie-chart`
+      }/projects/${projectId}/categories/${categoryId}/expenses/pie-chart`,
+      { credentials: "include" }
     );
     const json = await response.json();
     return json.data;
@@ -46,6 +58,7 @@ export class ExpenseHttpService {
       {
         method: "POST",
         body: JSON.stringify(expense),
+        credentials: "include",
       }
     );
     const json = await response.json();
@@ -64,6 +77,7 @@ export class ExpenseHttpService {
       {
         method: "PUT",
         body: JSON.stringify(updateExpense),
+        credentials: "include",
       }
     );
     const json = await response.json();
@@ -80,6 +94,7 @@ export class ExpenseHttpService {
       }/projects/${projectId}/expenses/${expenseId}`,
       {
         method: "DELETE",
+        credentials: "include",
       }
     );
     const json = await response.json();

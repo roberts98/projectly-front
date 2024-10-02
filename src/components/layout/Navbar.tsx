@@ -15,6 +15,15 @@ function Navbar() {
           Strona główna
         </Link>
         <Link
+          to="/projects/create"
+          color="#fff"
+          underline="none"
+          component={RouterLink}
+          sx={{ marginRight: 20 }}
+        >
+          Dodaj projekt
+        </Link>
+        <Link
           to="/categories/create"
           color="#fff"
           underline="none"

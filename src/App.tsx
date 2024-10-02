@@ -9,6 +9,7 @@ import { BootstrapHttpService } from "./http/bootstrap-http.service";
 import ProjectPage from "./pages/ProjectPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import CreateCategoryPage from "./pages/CreateCategoryPage";
+import CreateProjectPage from "./pages/CreateProjectPage";
 
 export const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ProjectsPage />} />
             <Route path="/projects/:projectId" element={<ProjectPage />} />
+            <Route path="/projects/create" element={<CreateProjectPage />} />
             <Route path="/categories/create" element={<CreateCategoryPage />} />
           </Routes>
         </HashRouter>

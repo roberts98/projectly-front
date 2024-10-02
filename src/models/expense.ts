@@ -19,6 +19,7 @@ export interface NewExpense {
   cost: number;
   deliveryCost?: number;
   buyDate: string;
+  passphrase?: string;
 }
 
 export interface UpdateExpense {

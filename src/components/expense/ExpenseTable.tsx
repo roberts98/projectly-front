@@ -57,7 +57,7 @@ function ExpenseTable({ projectId, expenses }: Props) {
       type: "number",
       width: 100,
       editable: true,
-      renderCell: (params) => params.value?.toFixed(2),
+      renderCell: (params) => Number(params.value)?.toFixed(2),
     },
     {
       field: "deliveryCost",

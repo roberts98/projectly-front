@@ -6,19 +6,20 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { Controller, FieldValues, useForm } from "react-hook-form";
-import { useCreateExpense } from "../../hooks/expense/useCreateExpense.hook";
-import { useCategories } from "../../hooks/category/useCategories.hook";
-import { NewExpense } from "../../models/expense";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import { Controller, FieldValues, useForm } from "react-hook-form";
+import { useCategories } from "../../hooks/category/useCategories.hook";
+import { useCreateExpense } from "../../hooks/expense/useCreateExpense.hook";
 import { useSubcategories } from "../../hooks/subcategory/useSubcategories.hook";
+import { NewExpense } from "../../models/expense";
 
 interface Props {
   projectId: number;
+  passphrase?: string;
 }
 
-function ExpenseForm({ projectId }: Props) {
+function ExpenseForm({ projectId, passphrase }: Props) {
   const { categories } = useCategories(projectId);
   const { control, register, handleSubmit, reset, watch } = useForm();
   const { createExpense } = useCreateExpense();
@@ -39,6 +40,7 @@ function ExpenseForm({ projectId }: Props) {
       cost: Number(cost),
       deliveryCost: Number(deliveryCost) || undefined,
       buyDate: dayjs(buyDate).format("YYYY-MM-DD"),
+      passphrase,
     };
     createExpense({ expense, projectId });
     reset();

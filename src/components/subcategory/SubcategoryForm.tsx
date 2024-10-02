@@ -1,9 +1,4 @@
-interface Props {
-  categoryId: number;
-}
-
-function SubcategoryForm({ categoryId }: Props) {
-  console.log(categoryId);
+function SubcategoryForm() {
   return <div>xd</div>;
 }
 
