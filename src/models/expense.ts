@@ -8,6 +8,7 @@ export interface Expense {
   itemName: string;
   cost: number;
   deliveryCost?: number;
+  buyDate: string;
 }
 
 export interface NewExpense {

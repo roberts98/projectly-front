@@ -12,6 +12,7 @@ import { usePassphraseStore } from "../store/project-auth-store";
 import ExpenseForProjectPieChart from "../components/expense/ExpenseForProjectPieChart";
 import ExpenseForTypePieChart from "../components/expense/ExpenseForTypePieChart";
 import { useCategories } from "../hooks/category/useCategories.hook";
+import ExpenseForBuyDateBarChart from "../components/expense/ExpenseForBuyDateBarChart";
 
 function ProjectPage() {
   const { projectId: projectIdString } = useParams();
@@ -58,6 +59,11 @@ function ProjectPage() {
             passphrase={passphraseInStore?.passphrase}
           />
         </ExpenseAccordion>
+        {!isEmptyProject && (
+          <ExpenseAccordion name="Wykres z podziałem na datę zakupu">
+            <ExpenseForBuyDateBarChart expenses={expenses} />
+          </ExpenseAccordion>
+        )}
         {!isEmptyProject && (
           <ExpenseAccordion name="Wykres z podziałem na pomieszczenia">
             <ExpenseForProjectPieChart expenses={expenses} />

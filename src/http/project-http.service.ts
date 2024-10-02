@@ -13,7 +13,7 @@ export class ProjectHttpService {
   public static async createProject(project: NewProject): Promise<number> {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/projects`, {
       method: "POST",
-      body: JSON.stringify(project),
+      body: JSON.stringify({ ...project, isPersonal: true }),
       credentials: "include",
     });
     const json = await response.json();
