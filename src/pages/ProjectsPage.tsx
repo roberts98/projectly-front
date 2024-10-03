@@ -11,7 +11,7 @@ function ProjectsPage() {
 
   useEffect(() => {
     document.title = "Projekty";
-  }, [document]);
+  }, []);
 
   return (
     <PageLoader active={isLoading}>

@@ -24,7 +24,7 @@ function ExpenseForm({ projectId, passphrase }: Props) {
   const { control, register, handleSubmit, reset, watch } = useForm();
   const { createExpense } = useCreateExpense();
   const selectedcategoryId: number | undefined = watch("categoryId");
-  const { subcategories } = useSubcategories(selectedcategoryId);
+  const { subcategories } = useSubcategories(projectId, selectedcategoryId);
 
   function onSubmit(formValues: FieldValues) {
     const { categoryId, subcategoryId, itemName, cost, deliveryCost, buyDate } =

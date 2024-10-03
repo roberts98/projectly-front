@@ -36,7 +36,7 @@ function ProjectPage() {
 
   useEffect(() => {
     document.title = `Projekt - ${project?.name || projectId}`;
-  }, [project]);
+  }, [project, projectId]);
 
   if (!projectId || allProjects.length === 0 || isLoading) {
     return null;

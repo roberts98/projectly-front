@@ -1,18 +1,17 @@
 import { CssBaseline } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import { BootstrapHttpService } from "./http/bootstrap-http.service";
-import ProjectPage from "./pages/ProjectPage";
-import ProjectsPage from "./pages/ProjectsPage";
 import CreateCategoryPage from "./pages/CreateCategoryPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
+import ProjectPage from "./pages/ProjectPage";
+import ProjectsPage from "./pages/ProjectsPage";
+import { queryClient } from "./query-client";
 import { useUserStore } from "./store/user.store";
-
-export const queryClient = new QueryClient();
 
 function App() {
   const [ready, setReady] = useState(false);
@@ -23,7 +22,7 @@ function App() {
       setUserInfo(response);
       setReady(true);
     });
-  }, []);
+  }, [setUserInfo]);
 
   if (!ready) return null;
 

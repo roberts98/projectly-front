@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { queryClient } from "../../App";
 import { ProjectHttpService } from "../../http/project-http.service";
 import { NewProject, Project } from "../../models/project";
 import { useUserStore } from "../../store/user.store";
+import { queryClient } from "../../query-client";
 
 export function useCreateProject() {
   const navigate = useNavigate();
