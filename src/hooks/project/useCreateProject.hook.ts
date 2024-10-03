@@ -1,12 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { ProjectHttpService } from "../../http/project-http.service";
-import { NewProject, Project } from "../../models/project";
-import { useUserStore } from "../../store/user.store";
+import { NewProject, ProjectsDto } from "../../models/project";
 import { queryClient } from "../../query-client";
+import { useUserStore } from "../../store/user.store";
 
 export function useCreateProject() {
-  const navigate = useNavigate();
   const userId = useUserStore((state) => state.user!.userId);
   const { mutate } = useMutation({
     mutationFn: (project: NewProject) =>
@@ -14,12 +12,20 @@ export function useCreateProject() {
     onSuccess: (id, { name, passphrase }) => {
       queryClient.setQueryData(
         ["projects"],
-        (oldData: Project[]): Project[] => [
-          ...oldData,
-          { id, name, userId, isEncrypted: !!passphrase, isPersonal: true },
-        ]
+        (oldData: ProjectsDto): ProjectsDto => {
+          const newProject = {
+            id,
+            name,
+            userId,
+            isEncrypted: !!passphrase,
+            isPersonal: true,
+          };
+          return {
+            shared: oldData.shared,
+            personal: [...oldData.personal, newProject],
+          };
+        }
       );
-      navigate("/#");
     },
   });
 
