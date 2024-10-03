@@ -8,11 +8,12 @@ import AuthForm from "../components/project/AuthForm";
 import PageLoader from "../components/shared/PageLoader";
 import { useExpenses } from "../hooks/expense/useExpenses.hook";
 import { useProjects } from "../hooks/project/useProjects.hook";
-import { usePassphraseStore } from "../store/project-auth-store";
+import { usePassphraseStore } from "../store/project-auth.store";
 import ExpenseForProjectPieChart from "../components/expense/ExpenseForProjectPieChart";
 import ExpenseForTypePieChart from "../components/expense/ExpenseForTypePieChart";
 import { useCategories } from "../hooks/category/useCategories.hook";
 import ExpenseForBuyDateBarChart from "../components/expense/ExpenseForBuyDateBarChart";
+import { useUserStore } from "../store/user.store";
 
 function ProjectPage() {
   const { projectId: projectIdString } = useParams();
@@ -29,7 +30,9 @@ function ProjectPage() {
     !areProjectsLoading,
     passphraseInStore?.passphrase
   );
+  const userId = useUserStore((state) => state.user?.userId);
   const { categories } = useCategories(projectId);
+  const isOwned = project?.userId === userId;
 
   useEffect(() => {
     document.title = `Projekt - ${project?.name || projectId}`;
@@ -50,15 +53,21 @@ function ProjectPage() {
       <Box sx={{ padding: 2, mb: 5 }}>
         {!isEmptyProject && (
           <ExpenseAccordion name="Tabela wydatków" defaultExpanded={true}>
-            <ExpenseTable projectId={projectId} expenses={expenses} />
+            <ExpenseTable
+              projectId={projectId}
+              readOnly={!isOwned}
+              expenses={expenses}
+            />
           </ExpenseAccordion>
         )}
-        <ExpenseAccordion name="Dodaj nowy przedmiot">
-          <ExpenseForm
-            projectId={projectId}
-            passphrase={passphraseInStore?.passphrase}
-          />
-        </ExpenseAccordion>
+        {isOwned && (
+          <ExpenseAccordion name="Dodaj nowy przedmiot">
+            <ExpenseForm
+              projectId={projectId}
+              passphrase={passphraseInStore?.passphrase}
+            />
+          </ExpenseAccordion>
+        )}
         {!isEmptyProject && (
           <ExpenseAccordion name="Wykres z podziałem na datę zakupu">
             <ExpenseForBuyDateBarChart expenses={expenses} />

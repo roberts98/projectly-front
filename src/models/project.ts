@@ -6,6 +6,7 @@ export interface ProjectsDto {
 export interface Project {
   id: number;
   name: string;
+  userId: number;
   isEncrypted: boolean;
   isPersonal: boolean;
 }

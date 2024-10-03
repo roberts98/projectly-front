@@ -3,7 +3,7 @@ import { ProjectHttpService } from "../../http/project-http.service";
 import {
   ProjectPassphrase,
   usePassphraseStore,
-} from "../../store/project-auth-store";
+} from "../../store/project-auth.store";
 
 export function useAuthProject() {
   const addPassphrase = usePassphraseStore((state) => state.addPassphrase);

@@ -18,9 +18,10 @@ import { Expense } from "../../models/expense";
 interface Props {
   projectId: number;
   expenses: Expense[];
+  readOnly: boolean;
 }
 
-function ExpenseTable({ projectId, expenses }: Props) {
+function ExpenseTable({ projectId, expenses, readOnly }: Props) {
   const { removeExpense } = useRemoveExpense();
   const { updateExpense } = useUpdateExpense();
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -39,7 +40,7 @@ function ExpenseTable({ projectId, expenses }: Props) {
       field: "itemName",
       headerName: "Nazwa",
       width: 400,
-      editable: true,
+      editable: !readOnly,
     },
     {
       field: "category",
@@ -56,7 +57,7 @@ function ExpenseTable({ projectId, expenses }: Props) {
       headerName: "Koszt",
       type: "number",
       width: 100,
-      editable: true,
+      editable: !readOnly,
       renderCell: (params) => Number(params.value)?.toFixed(2),
     },
     {
@@ -64,7 +65,7 @@ function ExpenseTable({ projectId, expenses }: Props) {
       headerName: "Koszt dostawy",
       type: "number",
       width: 200,
-      editable: true,
+      editable: !readOnly,
       renderCell: (params) => params.value?.toFixed(2) || "0.00",
     },
     {
@@ -173,7 +174,9 @@ function ExpenseTable({ projectId, expenses }: Props) {
     <DataGrid
       style={{ width: "100%" }}
       rows={rows}
-      columns={columns}
+      columns={columns.filter((column) =>
+        readOnly ? column.field !== "actions" : true
+      )}
       rowModesModel={rowModesModel}
       onRowModesModelChange={handleRowModesModelChange}
       onRowEditStop={handleRowEditStop}

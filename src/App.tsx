@@ -10,14 +10,19 @@ import ProjectPage from "./pages/ProjectPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import CreateCategoryPage from "./pages/CreateCategoryPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
+import { useUserStore } from "./store/user.store";
 
 export const queryClient = new QueryClient();
 
 function App() {
   const [ready, setReady] = useState(false);
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
 
   useEffect(() => {
-    BootstrapHttpService.bootstrap().then(() => setReady(true));
+    BootstrapHttpService.bootstrap().then((response) => {
+      setUserInfo(response);
+      setReady(true);
+    });
   }, []);
 
   if (!ready) return null;

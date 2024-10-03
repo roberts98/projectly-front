@@ -1,5 +1,5 @@
 import { NewProject, ProjectsDto } from "../models/project";
-import { ProjectPassphrase } from "../store/project-auth-store";
+import { ProjectPassphrase } from "../store/project-auth.store";
 
 export class ProjectHttpService {
   public static async fetchProjects(): Promise<ProjectsDto> {
