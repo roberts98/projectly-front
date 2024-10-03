@@ -21,7 +21,7 @@ function CategoryForm() {
       <input
         {...register("name")}
         type="text"
-        placeholder="Nazwa pokoju"
+        placeholder="Nazwa kategorii"
         required
       />
       <select {...register("projectId")} required>
@@ -31,7 +31,7 @@ function CategoryForm() {
           </option>
         ))}
       </select>
-      <button type="submit">Swtórz pokój</button>
+      <button type="submit">Stwórz kategorię</button>
     </form>
   );
 }

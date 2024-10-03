@@ -16,7 +16,7 @@ function ProjectForm() {
       <input
         {...register("name")}
         type="text"
-        placeholder="Nazwa pokoju"
+        placeholder="Nazwa projektu"
         required
       />
       <input
@@ -24,7 +24,7 @@ function ProjectForm() {
         type="password"
         placeholder="Hasło dostępu"
       />
-      <button type="submit">Swtórz projekt</button>
+      <button type="submit">Stwórz projekt</button>
     </form>
   );
 }

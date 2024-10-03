@@ -44,12 +44,12 @@ function ExpenseTable({ projectId, expenses, readOnly }: Props) {
     },
     {
       field: "category",
-      headerName: "Pokój",
+      headerName: "Kategoria",
       width: 400,
     },
     {
       field: "subcategory",
-      headerName: "Typ przedmiotu",
+      headerName: "Podkategoria",
       width: 400,
     },
     {

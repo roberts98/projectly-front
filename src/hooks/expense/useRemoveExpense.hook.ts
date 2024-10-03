@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "../../App";
 import { ExpenseHttpService } from "../../http/expense-http.service";
 import { Expense } from "../../models/expense";
+import { queryClient } from "../../query-client";
 
 interface Data {
   expense: Expense;

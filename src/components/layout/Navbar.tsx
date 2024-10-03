@@ -29,7 +29,7 @@ function Navbar() {
           underline="none"
           component={RouterLink}
         >
-          Dodaj pokój
+          Dodaj kategorię
         </Link>
       </Toolbar>
     </AppBar>

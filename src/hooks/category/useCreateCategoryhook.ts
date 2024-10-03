@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { CategoryHttpService } from "../../http/category-http.service";
-import { queryClient } from "../../App";
 import { Category } from "../../models/category";
+import { queryClient } from "../../query-client";
 
 interface Data {
   projectId: number;

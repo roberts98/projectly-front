@@ -69,11 +69,11 @@ function ExpenseForm({ projectId, passphrase }: Props) {
         sx={{ mr: 1 }}
       />
       <FormControl variant="outlined" sx={{ minWidth: 120, mr: 1 }}>
-        <InputLabel id="category-label">Pokój *</InputLabel>
+        <InputLabel id="category-label">Kategoria *</InputLabel>
         <Select
           labelId="category-label"
           id="category"
-          label="Pokój"
+          label="Kategoria"
           inputProps={register("categoryId")}
           defaultValue={""}
           required
@@ -86,11 +86,11 @@ function ExpenseForm({ projectId, passphrase }: Props) {
         </Select>
       </FormControl>
       <FormControl variant="outlined" sx={{ minWidth: 200, mr: 1 }}>
-        <InputLabel id="item-type-label">Typ przedmiotu *</InputLabel>
+        <InputLabel id="item-type-label">Podkategoria *</InputLabel>
         <Select
           labelId="item-type-label"
           id="item type"
-          label="Typ przedmiotu"
+          label="Podkategoria"
           inputProps={register("subcategoryId")}
           defaultValue={""}
           required
