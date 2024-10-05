@@ -28,8 +28,26 @@ function Navbar() {
           color="#fff"
           underline="none"
           component={RouterLink}
+          sx={{ marginRight: 20 }}
         >
           Dodaj kategorię
+        </Link>
+        <Link
+          to="/user-links/create"
+          color="#fff"
+          underline="none"
+          component={RouterLink}
+          sx={{ marginRight: 20 }}
+        >
+          Dodaj link dostępu
+        </Link>
+        <Link
+          to="/user-links/list"
+          color="#fff"
+          underline="none"
+          component={RouterLink}
+        >
+          Lista linków dostępu
         </Link>
       </Toolbar>
     </AppBar>

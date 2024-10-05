@@ -12,6 +12,9 @@ import ProjectPage from "./pages/ProjectPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import { queryClient } from "./query-client";
 import { useUserStore } from "./store/user.store";
+import CreateUserLinkPage from "./pages/CreateUserLinkPage";
+import UserLinksPage from "./pages/UserLinksPage";
+import ProcessUserLinkPage from "./pages/ProcessUserLinkPage";
 
 function App() {
   const [ready, setReady] = useState(false);
@@ -37,6 +40,12 @@ function App() {
             <Route path="/projects/:projectId" element={<ProjectPage />} />
             <Route path="/projects/create" element={<CreateProjectPage />} />
             <Route path="/categories/create" element={<CreateCategoryPage />} />
+            <Route
+              path="/user-links/process/*"
+              element={<ProcessUserLinkPage />}
+            />
+            <Route path="/user-links/create" element={<CreateUserLinkPage />} />
+            <Route path="/user-links/list" element={<UserLinksPage />} />
           </Routes>
         </HashRouter>
       </LocalizationProvider>
