@@ -36,7 +36,8 @@ export class ExpenseHttpService {
   public static async updateExpense(
     projectId: number,
     expenseId: number,
-    updateExpense: UpdateExpense
+    updateExpense: UpdateExpense,
+    passphrase?: string
   ): Promise<null> {
     const response = await fetch(
       `${
@@ -44,7 +45,7 @@ export class ExpenseHttpService {
       }/projects/${projectId}/expenses/${expenseId}`,
       {
         method: "PUT",
-        body: JSON.stringify(updateExpense),
+        body: JSON.stringify({ ...updateExpense, passphrase }),
         credentials: "include",
       }
     );

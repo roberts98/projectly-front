@@ -19,9 +19,10 @@ interface Props {
   projectId: number;
   expenses: Expense[];
   readOnly: boolean;
+  passphrase: string | undefined;
 }
 
-function ExpenseTable({ projectId, expenses, readOnly }: Props) {
+function ExpenseTable({ projectId, expenses, readOnly, passphrase }: Props) {
   const { removeExpense } = useRemoveExpense();
   const { updateExpense } = useUpdateExpense();
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -34,23 +35,23 @@ function ExpenseTable({ projectId, expenses, readOnly }: Props) {
     {
       field: "buyDate",
       headerName: "Data kupna",
-      width: 200,
+      width: 100,
     },
     {
       field: "itemName",
       headerName: "Nazwa",
-      width: 400,
+      width: 200,
       editable: !readOnly,
     },
     {
       field: "category",
       headerName: "Kategoria",
-      width: 400,
+      width: 100,
     },
     {
       field: "subcategory",
       headerName: "Podkategoria",
-      width: 400,
+      width: 100,
     },
     {
       field: "cost",
@@ -64,7 +65,7 @@ function ExpenseTable({ projectId, expenses, readOnly }: Props) {
       field: "deliveryCost",
       headerName: "Koszt dostawy",
       type: "number",
-      width: 200,
+      width: 140,
       editable: !readOnly,
       renderCell: (params) => params.value?.toFixed(2) || "0.00",
     },
@@ -162,6 +163,7 @@ function ExpenseTable({ projectId, expenses, readOnly }: Props) {
         deliveryCost: updatedExpense.deliveryCost,
       },
       oldCost: old.cost,
+      passphrase,
     });
     return updatedExpense;
   };

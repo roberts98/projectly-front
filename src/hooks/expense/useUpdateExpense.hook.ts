@@ -10,12 +10,18 @@ interface Data {
   subcategoryId: number;
   updateExpense: UpdateExpense;
   oldCost: number;
+  passphrase?: string;
 }
 
 export function useUpdateExpense() {
   const { mutate } = useMutation({
-    mutationFn: ({ projectId, expenseId, updateExpense }: Data) =>
-      ExpenseHttpService.updateExpense(projectId, expenseId, updateExpense),
+    mutationFn: ({ projectId, expenseId, updateExpense, passphrase }: Data) =>
+      ExpenseHttpService.updateExpense(
+        projectId,
+        expenseId,
+        updateExpense,
+        passphrase
+      ),
     onSuccess: (_, { projectId, expenseId, updateExpense }) => {
       setExpensesData(projectId, expenseId, updateExpense);
     },

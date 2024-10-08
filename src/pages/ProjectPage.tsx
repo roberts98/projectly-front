@@ -54,6 +54,7 @@ function ProjectPage() {
               projectId={projectId}
               readOnly={!isOwned}
               expenses={expenses}
+              passphrase={passphraseInStore?.passphrase}
             />
           </div>
         </div>
