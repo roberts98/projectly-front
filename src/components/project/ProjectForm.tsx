@@ -1,19 +1,16 @@
+import { Button, TextInput } from "flowbite-react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useCreateProject } from "../../hooks/project/useCreateProject.hook";
 import FormGroup from "../form/FormGroup";
-import { Button, TextInput } from "flowbite-react";
 
 function ProjectForm() {
   const { register, handleSubmit } = useForm();
   const { createProject } = useCreateProject();
-  const navigate = useNavigate();
 
   function onSubmit(formValues: FieldValues) {
     const { name, passphrase } = formValues;
 
     createProject({ name, passphrase: passphrase || undefined });
-    navigate("/");
   }
 
   return (
@@ -27,7 +24,6 @@ function ProjectForm() {
           id="passphrase"
           {...register("passphrase")}
           type="password"
-          required
         />
       </FormGroup>
       <Button type="submit" size="xl" className="mt-10 mx-auto">

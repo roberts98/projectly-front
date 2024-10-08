@@ -1,8 +1,8 @@
 import QRCode from "react-qr-code";
-import { useUserLinks } from "../hooks/user-link/useUserLinks.hook";
+import { useUserLink } from "../hooks/user-link/useUserLinks.hook";
 
 function UserLinksPage() {
-  const { userLink } = useUserLinks();
+  const { userLink } = useUserLink();
 
   if (!userLink) return null;
 

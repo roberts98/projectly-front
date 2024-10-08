@@ -54,7 +54,7 @@ function ExpenseForm({ projectId, passphrase }: Props) {
       <FormGroup id="category" label="Kategoria">
         <Select
           id="category"
-          {...register("categoryId")}
+          {...register("categoryId", { setValueAs: Number })}
           defaultValue=""
           required
         >
@@ -71,7 +71,7 @@ function ExpenseForm({ projectId, passphrase }: Props) {
       <FormGroup id="subcategory" label="Podkategoria">
         <Select
           id="subcategory"
-          {...register("subcategoryId")}
+          {...register("subcategoryId", { setValueAs: Number })}
           disabled={!selectedCategoryId}
           defaultValue=""
           required
@@ -94,7 +94,6 @@ function ExpenseForm({ projectId, passphrase }: Props) {
           type="number"
           id="deliveryCost"
           {...register("deliveryCost")}
-          required
         />
       </FormGroup>
       <Button className="ml-auto mt-5" type="submit">

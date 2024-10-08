@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { ExpenseHttpService } from "../../http/expense-http.service";
 import { Expense, NewExpense } from "../../models/expense";
 import { queryClient } from "../../query-client";
+import { toast } from "react-toastify";
 
 interface Data {
   expense: NewExpense;
@@ -16,10 +17,11 @@ export function useCreateExpense() {
       queryClient.setQueryData(
         [`expenses-${projectId}`],
         (oldData: Expense[]): Expense[] => [
-          ...oldData,
           { ...expense, id, projectId },
+          ...oldData,
         ]
       );
+      toast("Wydatek utworzony", { type: "success" });
     },
   });
 

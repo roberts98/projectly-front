@@ -1,5 +1,6 @@
 import { ReactNode, useState } from "react";
 import Sidebar from "./Sidebar";
+import { ToastContainer } from "react-toastify";
 
 interface Props {
   children: ReactNode;
@@ -66,6 +67,7 @@ function Page({ children }: Props) {
           </main>
         </div>
       </div>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 }
