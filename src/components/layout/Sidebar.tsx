@@ -1,9 +1,9 @@
 import {
   Create,
-  Key,
   KeyboardArrowDown,
   KeyboardArrowUp,
   Lock,
+  LockOpen,
   Public,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -77,7 +77,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                           {personal.map((project) => (
-                            <li>
+                            <li key={project.id}>
                               <Link
                                 className="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                 to={`/projects/${project.id}`}
@@ -114,7 +114,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                           {shared.map((project) => (
-                            <li>
+                            <li key={project.id}>
                               <Link
                                 className="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                 to={`/projects/${project.id}`}
@@ -149,7 +149,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                   className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                   to="/user-links/create"
                 >
-                  <Key fontSize="small" /> Dodaj link dostępu
+                  <Lock fontSize="small" /> Dodaj link dostępu
                 </Link>
               </li>
               <li>
@@ -157,7 +157,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                   className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                   to="/user-links/list"
                 >
-                  <Key fontSize="small" /> Twój link dostepu
+                  <LockOpen fontSize="small" /> Twój link dostepu
                 </Link>
               </li>
             </ul>

@@ -1,18 +1,11 @@
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import { Button, Datepicker, Select, TextInput } from "flowbite-react";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { useCategories } from "../../hooks/category/useCategories.hook";
 import { useCreateExpense } from "../../hooks/expense/useCreateExpense.hook";
 import { useSubcategories } from "../../hooks/subcategory/useSubcategories.hook";
 import { NewExpense } from "../../models/expense";
+import FormGroup from "../form/FormGroup";
 
 interface Props {
   projectId: number;
@@ -23,8 +16,8 @@ function ExpenseForm({ projectId, passphrase }: Props) {
   const { categories } = useCategories(projectId);
   const { control, register, handleSubmit, reset, watch } = useForm();
   const { createExpense } = useCreateExpense();
-  const selectedcategoryId: number | undefined = watch("categoryId");
-  const { subcategories } = useSubcategories(projectId, selectedcategoryId);
+  const selectedCategoryId: number | undefined = watch("categoryId");
+  const { subcategories } = useSubcategories(projectId, selectedCategoryId);
 
   function onSubmit(formValues: FieldValues) {
     const { categoryId, subcategoryId, itemName, cost, deliveryCost, buyDate } =
@@ -48,75 +41,63 @@ function ExpenseForm({ projectId, passphrase }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        control={control}
-        name="buyDate"
-        rules={{ required: true }}
-        render={({ field }) => (
-          <DatePicker
-            label="Data kupna"
-            value={field.value}
-            inputRef={field.ref}
-            onChange={field.onChange}
-          />
-        )}
-      />
-      <TextField
-        variant="outlined"
-        label="Nazwa przedmiotu"
-        required
-        inputProps={register("itemName")}
-        sx={{ mr: 1 }}
-      />
-      <FormControl variant="outlined" sx={{ minWidth: 120, mr: 1 }}>
-        <InputLabel id="category-label">Kategoria *</InputLabel>
+      <FormGroup id="buyDate" label="Data kupna">
+        <Controller
+          control={control}
+          name="buyDate"
+          render={({ field }) => <Datepicker onChange={field.onChange} />}
+        />
+      </FormGroup>
+      <FormGroup id="itemName" label="Nazwa przedmiotu">
+        <TextInput id="itemName" {...register("itemName")} required />
+      </FormGroup>
+      <FormGroup id="category" label="Kategoria">
         <Select
-          labelId="category-label"
           id="category"
-          label="Kategoria"
-          inputProps={register("categoryId")}
-          defaultValue={""}
+          {...register("categoryId")}
+          defaultValue=""
           required
         >
+          <option value="" disabled>
+            Wybierz kategorię
+          </option>
           {categories.map((category) => (
-            <MenuItem key={category.id} value={category.id}>
+            <option key={category.id} value={category.id}>
               {category.name}
-            </MenuItem>
+            </option>
           ))}
         </Select>
-      </FormControl>
-      <FormControl variant="outlined" sx={{ minWidth: 200, mr: 1 }}>
-        <InputLabel id="item-type-label">Podkategoria *</InputLabel>
+      </FormGroup>
+      <FormGroup id="subcategory" label="Podkategoria">
         <Select
-          labelId="item-type-label"
-          id="item type"
-          label="Podkategoria"
-          inputProps={register("subcategoryId")}
-          defaultValue={""}
+          id="subcategory"
+          {...register("subcategoryId")}
+          disabled={!selectedCategoryId}
+          defaultValue=""
           required
-          disabled={!selectedcategoryId}
         >
+          <option value="" disabled>
+            Wybierz podkategorię
+          </option>
           {subcategories.map((subcategory) => (
-            <MenuItem key={subcategory.id} value={subcategory.id}>
+            <option key={subcategory.id} value={subcategory.id}>
               {subcategory.name}
-            </MenuItem>
+            </option>
           ))}
         </Select>
-      </FormControl>
-      <TextField
-        variant="outlined"
-        label="Kwota w PLN"
-        required
-        inputProps={register("cost")}
-        sx={{ mr: 1 }}
-      />
-      <TextField
-        variant="outlined"
-        label="Kwota dostawy w PLN"
-        inputProps={register("deliveryCost")}
-        sx={{ mr: 1 }}
-      />
-      <Button variant="outlined" type="submit" size="large">
+      </FormGroup>
+      <FormGroup id="cost" label="Kwota w PLN">
+        <TextInput type="number" id="cost" {...register("cost")} required />
+      </FormGroup>
+      <FormGroup id="deliveryCost" label="Kwota dostawy w PLN">
+        <TextInput
+          type="number"
+          id="deliveryCost"
+          {...register("deliveryCost")}
+          required
+        />
+      </FormGroup>
+      <Button className="ml-auto mt-5" type="submit">
         Dodaj
       </Button>
     </form>

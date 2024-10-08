@@ -1,5 +1,7 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { useAuthProject } from "../../hooks/project/useAuthProject.hook";
+import { TextInput, Button } from "flowbite-react";
+import FormGroup from "../form/FormGroup";
 
 interface Props {
   projectId: number;
@@ -17,12 +19,18 @@ function AuthForm({ projectId }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        {...register("passphrase")}
-        type="password"
-        placeholder="Hasło dostępu"
-      />
-      <button type="submit">Autoryzuj</button>
+      <FormGroup id="passphrase" label="Hasło dostępu">
+        <TextInput
+          sizing="lg"
+          id="passphrase"
+          {...register("passphrase")}
+          type="password"
+          required
+        />
+      </FormGroup>
+      <Button type="submit" size="xl" className="mt-10 mx-auto">
+        Autoryzuj
+      </Button>
     </form>
   );
 }
