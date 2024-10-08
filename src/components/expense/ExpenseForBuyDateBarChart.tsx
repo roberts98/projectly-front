@@ -56,8 +56,6 @@ function ExpenseForBuyDateBarChart({ expenses }: Props) {
             return entry ? entry.totalCost : 0;
           }),
         }))}
-        width={800}
-        height={400}
       />
     </Box>
   );

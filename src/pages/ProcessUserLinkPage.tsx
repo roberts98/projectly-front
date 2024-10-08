@@ -1,8 +1,8 @@
-import { useParams } from "react-router-dom";
-import { useVerifyUserLink } from "../hooks/user-link/useVerifyUserLink.hook";
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { useProcessUserLink } from "../hooks/user-link/useProcessUserLink.hook";
+import { useVerifyUserLink } from "../hooks/user-link/useVerifyUserLink.hook";
 
 function ProcessUserLinkPage() {
   const { "*": hash } = useParams();

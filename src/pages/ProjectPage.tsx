@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ExpenseAccordion from "../components/expense/ExpenseAccordion";
+import CategoryTiles from "../components/category/CategoryTiles";
+import ExpenseForBuyDateBarChart from "../components/expense/ExpenseForBuyDateBarChart";
 import ExpenseForm from "../components/expense/ExpenseForm";
 import ExpenseTable from "../components/expense/ExpenseTable";
 import AuthForm from "../components/project/AuthForm";
@@ -9,10 +9,6 @@ import PageLoader from "../components/shared/PageLoader";
 import { useExpenses } from "../hooks/expense/useExpenses.hook";
 import { useProjects } from "../hooks/project/useProjects.hook";
 import { usePassphraseStore } from "../store/project-auth.store";
-import ExpenseForProjectPieChart from "../components/expense/ExpenseForProjectPieChart";
-import ExpenseForTypePieChart from "../components/expense/ExpenseForTypePieChart";
-import { useCategories } from "../hooks/category/useCategories.hook";
-import ExpenseForBuyDateBarChart from "../components/expense/ExpenseForBuyDateBarChart";
 import { useUserStore } from "../store/user.store";
 
 function ProjectPage() {
@@ -31,7 +27,6 @@ function ProjectPage() {
     passphraseInStore?.passphrase
   );
   const userId = useUserStore((state) => state.user?.userId);
-  const { categories } = useCategories(projectId);
   const isOwned = project?.userId === userId;
 
   useEffect(() => {
@@ -46,52 +41,27 @@ function ProjectPage() {
     return <AuthForm projectId={projectId} />;
   }
 
-  const isEmptyProject = !isLoading && expenses.length === 0;
-
   return (
     <PageLoader active={isLoading}>
-      <Box sx={{ padding: 2, mb: 5 }}>
-        {!isEmptyProject && (
-          <ExpenseAccordion name="Tabela wydatków" defaultExpanded={true}>
-            <ExpenseTable
-              projectId={projectId}
-              readOnly={!isOwned}
-              expenses={expenses}
-            />
-          </ExpenseAccordion>
-        )}
-        {isOwned && (
-          <ExpenseAccordion name="Dodaj nowy przedmiot">
-            <ExpenseForm
-              projectId={projectId}
-              passphrase={passphraseInStore?.passphrase}
-            />
-          </ExpenseAccordion>
-        )}
-        {!isEmptyProject && (
-          <ExpenseAccordion name="Wykres z podziałem na datę zakupu">
-            <ExpenseForBuyDateBarChart expenses={expenses} />
-          </ExpenseAccordion>
-        )}
-        {!isEmptyProject && (
-          <ExpenseAccordion name="Wykres z podziałem na pomieszczenia">
-            <ExpenseForProjectPieChart expenses={expenses} />
-          </ExpenseAccordion>
-        )}
-        {!isEmptyProject && (
-          <ExpenseAccordion name="Wykres z podziałem na typy przdmiotów">
-            {categories.map((category) => (
-              <ExpenseAccordion key={category.id} name={category.name}>
-                <ExpenseForTypePieChart
-                  expenses={expenses.filter(
-                    (expense) => expense.categoryId === category.id
-                  )}
-                />
-              </ExpenseAccordion>
-            ))}
-          </ExpenseAccordion>
-        )}
-      </Box>
+      <CategoryTiles projectId={projectId} expenses={expenses} />
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+        <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
+          <ExpenseTable
+            projectId={projectId}
+            readOnly={!isOwned}
+            expenses={expenses}
+          />
+        </div>
+        <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
+          <ExpenseForm
+            projectId={projectId}
+            passphrase={passphraseInStore?.passphrase}
+          />
+        </div>
+        <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-12">
+          <ExpenseForBuyDateBarChart expenses={expenses} />
+        </div>
+      </div>
     </PageLoader>
   );
 }
