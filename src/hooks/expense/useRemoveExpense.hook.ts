@@ -8,7 +8,7 @@ interface Data {
 }
 
 export function useRemoveExpense() {
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: ({ expense }: Data) =>
       ExpenseHttpService.removeExpense(expense.projectId, expense.id),
     onSuccess: (_, { expense: { id, projectId } }) => {
@@ -19,5 +19,5 @@ export function useRemoveExpense() {
     },
   });
 
-  return { removeExpense: mutate };
+  return { removeExpense: mutate, isRemovingExpense: isPending };
 }

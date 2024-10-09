@@ -1,6 +1,6 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { useAuthProject } from "../../hooks/project/useAuthProject.hook";
-import { TextInput, Button } from "flowbite-react";
+import { TextInput, Button, Spinner } from "flowbite-react";
 import FormGroup from "../form/FormGroup";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 function AuthForm({ projectId }: Props) {
   const { register, handleSubmit } = useForm();
-  const { authProject } = useAuthProject();
+  const { authProject, isAuthorizingProject } = useAuthProject();
 
   function onSubmit(formValues: FieldValues) {
     const { passphrase } = formValues;
@@ -28,9 +28,15 @@ function AuthForm({ projectId }: Props) {
           required
         />
       </FormGroup>
-      <Button type="submit" size="xl" className="mt-10 mx-auto">
-        Autoryzuj
-      </Button>
+      <div className="mt-10 flex justify-center">
+        {isAuthorizingProject ? (
+          <Spinner />
+        ) : (
+          <Button type="submit" size="xl">
+            Autoryzuj
+          </Button>
+        )}
+      </div>
     </form>
   );
 }

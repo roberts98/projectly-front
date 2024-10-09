@@ -10,7 +10,7 @@ interface Data {
 }
 
 export function useCreateExpense() {
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: ({ expense, projectId }: Data) =>
       ExpenseHttpService.createExpense(expense, projectId),
     onSuccess: (id, { expense, projectId }) => {
@@ -25,5 +25,5 @@ export function useCreateExpense() {
     },
   });
 
-  return { createExpense: mutate };
+  return { createExpense: mutate, isCreatingExpense: isPending };
 }

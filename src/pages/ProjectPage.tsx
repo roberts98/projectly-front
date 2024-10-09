@@ -10,19 +10,19 @@ import { useProjects } from "../hooks/project/useProjects.hook";
 import { usePassphraseStore } from "../store/project-auth.store";
 import { useUserStore } from "../store/user.store";
 import AuthProjectPage from "./AuthProjectPage";
-import { Button } from "flowbite-react";
+import { Button, Spinner } from "flowbite-react";
 import { useDeleteProject } from "../hooks/project/useDeleteProject.hook";
 
 function ProjectPage() {
   const { projectId: projectIdString } = useParams();
-  const { projects, isLoading: areProjectsLoading } = useProjects();
+  const { projects, areProjectsLoading } = useProjects();
   const allProjects = [...projects.personal, ...projects.shared];
   const projectId = Number(projectIdString);
   const project = allProjects.find((project) => project.id === projectId);
   const passphraseInStore = usePassphraseStore((state) =>
     state.passphrases.find((x) => x.projectId === projectId)
   );
-  const { expenses, isLoading } = useExpenses(
+  const { expenses, areExpensesLoading } = useExpenses(
     projectId,
     !!project?.isEncrypted,
     !areProjectsLoading,
@@ -30,13 +30,13 @@ function ProjectPage() {
   );
   const userId = useUserStore((state) => state.user?.userId);
   const isOwned = project?.userId === userId;
-  const { deleteProject } = useDeleteProject();
+  const { deleteProject, isDeletingProject } = useDeleteProject();
 
   useEffect(() => {
     document.title = `Projekt - ${project?.name || projectId}`;
   }, [project, projectId]);
 
-  if (!projectId || allProjects.length === 0 || isLoading) {
+  if (!projectId || allProjects.length === 0) {
     return null;
   }
 
@@ -49,15 +49,28 @@ function ProjectPage() {
   }
 
   return (
-    <PageLoader active={isLoading}>
-      <div className="flex justify-end">
-        <Button color="failure" onClick={handleRemoveClick}>
-          Usuń projekt
-        </Button>
+    <PageLoader active={areExpensesLoading}>
+      <div className="flex justify-end mb-5">
+        {isOwned &&
+          (isDeletingProject ? (
+            <Spinner />
+          ) : (
+            <Button
+              color="failure"
+              onClick={handleRemoveClick}
+              disabled={isDeletingProject}
+            >
+              Usuń projekt
+            </Button>
+          ))}
       </div>
       <CategoryTiles projectId={projectId} expenses={expenses} />
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
+        <div
+          className={`col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-${
+            isOwned ? 8 : 12
+          }`}
+        >
           <div className="flex h-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4 mb-5">
             Tabela wydatków
           </div>
@@ -70,15 +83,18 @@ function ProjectPage() {
             />
           </div>
         </div>
-        <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-          <div className="flex h-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4 mb-5">
-            Nowy wydatek
+        {isOwned && (
+          <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
+            <div className="flex h-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4 mb-5">
+              Nowy wydatek
+            </div>
+            <ExpenseForm
+              projectId={projectId}
+              passphrase={passphraseInStore?.passphrase}
+            />
           </div>
-          <ExpenseForm
-            projectId={projectId}
-            passphrase={passphraseInStore?.passphrase}
-          />
-        </div>
+        )}
+
         <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-12">
           <ExpenseForBuyDateBarChart expenses={expenses} />
         </div>

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { Button, Datepicker, Select, TextInput } from "flowbite-react";
+import { Button, Datepicker, Select, Spinner, TextInput } from "flowbite-react";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { useCategories } from "../../hooks/category/useCategories.hook";
 import { useCreateExpense } from "../../hooks/expense/useCreateExpense.hook";
@@ -15,7 +15,7 @@ interface Props {
 function ExpenseForm({ projectId, passphrase }: Props) {
   const { categories } = useCategories(projectId);
   const { control, register, handleSubmit, reset, watch } = useForm();
-  const { createExpense } = useCreateExpense();
+  const { createExpense, isCreatingExpense } = useCreateExpense();
   const selectedCategoryId: number | undefined = watch("categoryId");
   const { subcategories } = useSubcategories(projectId, selectedCategoryId);
 
@@ -96,9 +96,9 @@ function ExpenseForm({ projectId, passphrase }: Props) {
           {...register("deliveryCost")}
         />
       </FormGroup>
-      <Button className="ml-auto mt-5" type="submit">
-        Dodaj
-      </Button>
+      <div className="ml-auto flex justify-end">
+        {isCreatingExpense ? <Spinner /> : <Button type="submit">Dodaj</Button>}
+      </div>
     </form>
   );
 }

@@ -6,6 +6,7 @@ import {
   LockOpen,
   Public,
 } from "@mui/icons-material";
+import { Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useProjects } from "../../hooks/project/useProjects.hook";
 import SidebarLinkGroup from "./SidebarLinkGroup";
@@ -18,6 +19,7 @@ interface Props {
 function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
   const {
     projects: { personal, shared },
+    areProjectsLoading,
   } = useProjects();
 
   return (
@@ -54,90 +56,96 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
             <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
               Projekty
             </h3>
-            <ul className="mb-6 flex flex-col gap-1.5">
-              <SidebarLinkGroup>
-                {(handleClick, open) => {
-                  return (
-                    <>
-                      <Link
-                        to="#"
-                        className="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleClick();
-                        }}
-                      >
-                        <Lock fontSize="small" /> Prywatne projekty
-                        {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-                      </Link>
-                      <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
-                      >
-                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                          {personal.map((project) => (
-                            <li key={project.id}>
-                              <Link
-                                className="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                to={`/projects/${project.id}`}
-                              >
-                                {project.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </>
-                  );
-                }}
-              </SidebarLinkGroup>
-              <SidebarLinkGroup>
-                {(handleClick, open) => {
-                  return (
-                    <>
-                      <Link
-                        to="#"
-                        className="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleClick();
-                        }}
-                      >
-                        <Public fontSize="small" /> Publiczne projekty
-                        {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-                      </Link>
-                      <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
-                      >
-                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                          {shared.map((project) => (
-                            <li key={project.id}>
-                              <Link
-                                className="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                to={`/projects/${project.id}`}
-                              >
-                                {project.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </>
-                  );
-                }}
-              </SidebarLinkGroup>
-              <li>
-                <Link
-                  className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                  to="/projects/create"
-                >
-                  <Create fontSize="small" /> Dodaj projekt
-                </Link>
-              </li>
-            </ul>
+            {areProjectsLoading ? (
+              <div className="mb-4 ml-4">
+                <Spinner />
+              </div>
+            ) : (
+              <ul className="mb-6 flex flex-col gap-1.5">
+                <SidebarLinkGroup>
+                  {(handleClick, open) => {
+                    return (
+                      <>
+                        <Link
+                          to="#"
+                          className="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleClick();
+                          }}
+                        >
+                          <Lock fontSize="small" /> Prywatne projekty
+                          {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                        </Link>
+                        <div
+                          className={`translate transform overflow-hidden ${
+                            !open && "hidden"
+                          }`}
+                        >
+                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                            {personal.map((project) => (
+                              <li key={project.id}>
+                                <Link
+                                  className="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                  to={`/projects/${project.id}`}
+                                >
+                                  {project.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </>
+                    );
+                  }}
+                </SidebarLinkGroup>
+                <SidebarLinkGroup>
+                  {(handleClick, open) => {
+                    return (
+                      <>
+                        <Link
+                          to="#"
+                          className="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleClick();
+                          }}
+                        >
+                          <Public fontSize="small" /> Publiczne projekty
+                          {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                        </Link>
+                        <div
+                          className={`translate transform overflow-hidden ${
+                            !open && "hidden"
+                          }`}
+                        >
+                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                            {shared.map((project) => (
+                              <li key={project.id}>
+                                <Link
+                                  className="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                  to={`/projects/${project.id}`}
+                                >
+                                  {project.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </>
+                    );
+                  }}
+                </SidebarLinkGroup>
+                <li>
+                  <Link
+                    className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                    to="/projects/create"
+                  >
+                    <Create fontSize="small" /> Dodaj projekt
+                  </Link>
+                </li>
+              </ul>
+            )}
           </div>
           <div>
             <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">

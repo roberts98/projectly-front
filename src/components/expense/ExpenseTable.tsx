@@ -23,8 +23,8 @@ interface Props {
 }
 
 function ExpenseTable({ projectId, expenses, readOnly, passphrase }: Props) {
-  const { removeExpense } = useRemoveExpense();
-  const { updateExpense } = useUpdateExpense();
+  const { removeExpense, isRemovingExpense } = useRemoveExpense();
+  const { updateExpense, isUpdatingExpense } = useUpdateExpense();
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const columns: GridColDef[] = [
     {
@@ -184,6 +184,7 @@ function ExpenseTable({ projectId, expenses, readOnly, passphrase }: Props) {
       onRowEditStop={handleRowEditStop}
       processRowUpdate={processRowUpdate}
       editMode="row"
+      loading={isRemovingExpense || isUpdatingExpense}
       pageSizeOptions={[
         { label: "10", value: 10 },
         { label: "20", value: 20 },

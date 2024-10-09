@@ -8,7 +8,7 @@ import { queryClient } from "../../query-client";
 export function useDeleteProject() {
   const navigate = useNavigate();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (projectId: number) =>
       ProjectHttpService.deleteProject(projectId),
     onSuccess: (_, projectId) => {
@@ -30,5 +30,5 @@ export function useDeleteProject() {
     },
   });
 
-  return { deleteProject: mutate };
+  return { deleteProject: mutate, isDeletingProject: isPending };
 }

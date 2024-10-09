@@ -8,11 +8,11 @@ import {
 export function useAuthProject() {
   const addPassphrase = usePassphraseStore((state) => state.addPassphrase);
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: ProjectPassphrase) =>
       ProjectHttpService.authProject(data),
     onSuccess: (_, data) => addPassphrase(data),
   });
 
-  return { authProject: mutate };
+  return { authProject: mutate, isAuthorizingProject: isPending };
 }

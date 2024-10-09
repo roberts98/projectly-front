@@ -10,7 +10,7 @@ export function useCreateProject() {
   const userId = useUserStore((state) => state.user!.userId);
   const navigate = useNavigate();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (project: NewProject) =>
       ProjectHttpService.createProject(project),
     onSuccess: (id, { name, passphrase }) => {
@@ -35,5 +35,5 @@ export function useCreateProject() {
     },
   });
 
-  return { createProject: mutate };
+  return { createProject: mutate, isCreatingProject: isPending };
 }

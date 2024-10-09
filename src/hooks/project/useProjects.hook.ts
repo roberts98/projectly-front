@@ -10,5 +10,5 @@ export function useProjects() {
     }
   );
 
-  return { projects, isLoading };
+  return { projects, areProjectsLoading: isLoading };
 }

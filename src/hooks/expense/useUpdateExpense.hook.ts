@@ -14,7 +14,7 @@ interface Data {
 }
 
 export function useUpdateExpense() {
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: ({ projectId, expenseId, updateExpense, passphrase }: Data) =>
       ExpenseHttpService.updateExpense(
         projectId,
@@ -27,7 +27,7 @@ export function useUpdateExpense() {
     },
   });
 
-  return { updateExpense: mutate };
+  return { updateExpense: mutate, isUpdatingExpense: isPending };
 }
 
 function setExpensesData(

@@ -1,11 +1,11 @@
-import { Button, TextInput } from "flowbite-react";
+import { Button, Spinner, TextInput } from "flowbite-react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useCreateProject } from "../../hooks/project/useCreateProject.hook";
 import FormGroup from "../form/FormGroup";
 
 function ProjectForm() {
   const { register, handleSubmit } = useForm();
-  const { createProject } = useCreateProject();
+  const { createProject, isCreatingProject } = useCreateProject();
 
   function onSubmit(formValues: FieldValues) {
     const { name, passphrase } = formValues;
@@ -26,9 +26,15 @@ function ProjectForm() {
           type="password"
         />
       </FormGroup>
-      <Button type="submit" size="xl" className="mt-10 mx-auto">
-        Stwórz projekt
-      </Button>
+      <div className="mt-10 flex justify-center">
+        {isCreatingProject ? (
+          <Spinner />
+        ) : (
+          <Button type="submit" size="xl" disabled={isCreatingProject}>
+            Stwórz projekt
+          </Button>
+        )}
+      </div>
     </form>
   );
 }

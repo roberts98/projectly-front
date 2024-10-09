@@ -14,5 +14,5 @@ export function useExpenses(
     enabled: secured ? ready && !!passphrase : ready,
   });
 
-  return { expenses, isLoading };
+  return { expenses, areExpensesLoading: isLoading };
 }
