@@ -10,6 +10,8 @@ import { useProjects } from "../hooks/project/useProjects.hook";
 import { usePassphraseStore } from "../store/project-auth.store";
 import { useUserStore } from "../store/user.store";
 import AuthProjectPage from "./AuthProjectPage";
+import { Button } from "flowbite-react";
+import { useDeleteProject } from "../hooks/project/useDeleteProject.hook";
 
 function ProjectPage() {
   const { projectId: projectIdString } = useParams();
@@ -28,6 +30,7 @@ function ProjectPage() {
   );
   const userId = useUserStore((state) => state.user?.userId);
   const isOwned = project?.userId === userId;
+  const { deleteProject } = useDeleteProject();
 
   useEffect(() => {
     document.title = `Projekt - ${project?.name || projectId}`;
@@ -41,8 +44,17 @@ function ProjectPage() {
     return <AuthProjectPage projectId={projectId} />;
   }
 
+  function handleRemoveClick() {
+    deleteProject(projectId);
+  }
+
   return (
     <PageLoader active={isLoading}>
+      <div className="flex justify-end">
+        <Button color="failure" onClick={handleRemoveClick}>
+          Usuń projekt
+        </Button>
+      </div>
       <CategoryTiles projectId={projectId} expenses={expenses} />
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">

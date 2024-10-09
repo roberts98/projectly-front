@@ -20,6 +20,18 @@ export class ProjectHttpService {
     return json.data;
   }
 
+  public static async deleteProject(projectId: number): Promise<null> {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+    const json = await response.json();
+    return json.data;
+  }
+
   public static async authProject(data: ProjectPassphrase): Promise<null> {
     const { projectId, passphrase } = data;
     const response = await fetch(
