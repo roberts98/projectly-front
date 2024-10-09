@@ -10,7 +10,7 @@ import { useProjects } from "../hooks/project/useProjects.hook";
 import { usePassphraseStore } from "../store/project-auth.store";
 import { useUserStore } from "../store/user.store";
 import AuthProjectPage from "./AuthProjectPage";
-import { Button, Spinner } from "flowbite-react";
+import { Badge, Button, Spinner } from "flowbite-react";
 import { useDeleteProject } from "../hooks/project/useDeleteProject.hook";
 
 function ProjectPage() {
@@ -50,7 +50,18 @@ function ProjectPage() {
 
   return (
     <PageLoader active={areExpensesLoading}>
-      <div className="flex justify-end mb-5">
+      <div className="flex justify-between items-center mb-5">
+        <div className="flex items-center">
+          <Badge className="mr-2" size="md" color="indigo">
+            {project?.isPersonal ? "Prywatny" : "Publiczny"}
+          </Badge>
+          {isOwned && (
+            <Badge className="mr-2" size="md" color="failure">
+              Twój
+            </Badge>
+          )}
+          <h2 className="text-3xl">{project?.name}</h2>
+        </div>
         {isOwned &&
           (isDeletingProject ? (
             <Spinner />
