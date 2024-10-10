@@ -1,12 +1,12 @@
 import { ReactNode, useState } from "react";
-import Sidebar from "./Sidebar";
+import { Sidebar } from "./Sidebar";
 import { ToastContainer } from "react-toastify";
 
 interface Props {
   children: ReactNode;
 }
 
-function Page({ children }: Props) {
+export function Page({ children }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
@@ -71,5 +71,3 @@ function Page({ children }: Props) {
     </div>
   );
 }
-
-export default Page;

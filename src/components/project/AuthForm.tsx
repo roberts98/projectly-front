@@ -1,13 +1,13 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { useAuthProject } from "../../hooks/project/useAuthProject.hook";
 import { TextInput, Button, Spinner } from "flowbite-react";
-import FormGroup from "../form/FormGroup";
+import { FormGroup } from "../form/FormGroup";
 
 interface Props {
   projectId: number;
 }
 
-function AuthForm({ projectId }: Props) {
+export function AuthForm({ projectId }: Props) {
   const { register, handleSubmit } = useForm();
   const { authProject, isAuthorizingProject } = useAuthProject();
 
@@ -40,5 +40,3 @@ function AuthForm({ projectId }: Props) {
     </form>
   );
 }
-
-export default AuthForm;

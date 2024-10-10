@@ -7,7 +7,7 @@ interface Props {
   expenses: Expense[];
 }
 
-function ExpenseForBuyDateBarChart({ expenses }: Props) {
+export function ExpenseForBuyDateBarChart({ expenses }: Props) {
   const dataByMonthAndCategory = expenses.reduce(
     (acc: Record<string, Record<string, number>>, expense) => {
       const month = dayjs(expense.buyDate).format("YYYY-MM");
@@ -25,7 +25,7 @@ function ExpenseForBuyDateBarChart({ expenses }: Props) {
 
       return acc;
     },
-    {}
+    {},
   );
 
   const chartData = Object.entries(dataByMonthAndCategory).flatMap(
@@ -34,11 +34,11 @@ function ExpenseForBuyDateBarChart({ expenses }: Props) {
         month,
         category,
         totalCost,
-      }))
+      })),
   );
 
   const categories = Array.from(
-    new Set(chartData.map((data) => data.category))
+    new Set(chartData.map((data) => data.category)),
   );
   const months = Array.from(new Set(chartData.map((data) => data.month)));
 
@@ -51,7 +51,7 @@ function ExpenseForBuyDateBarChart({ expenses }: Props) {
           label: category,
           data: months.map((month) => {
             const entry = chartData.find(
-              (data) => data.month === month && data.category === category
+              (data) => data.month === month && data.category === category,
             );
             return entry ? entry.totalCost : 0;
           }),
@@ -60,5 +60,3 @@ function ExpenseForBuyDateBarChart({ expenses }: Props) {
     </Box>
   );
 }
-
-export default ExpenseForBuyDateBarChart;

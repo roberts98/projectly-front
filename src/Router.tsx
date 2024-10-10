@@ -1,13 +1,13 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
-import CreateCategoryPage from "./pages/CreateCategoryPage";
-import CreateProjectPage from "./pages/CreateProjectPage";
-import CreateUserLinkPage from "./pages/CreateUserLinkPage";
-import ProcessUserLinkPage from "./pages/ProcessUserLinkPage";
-import ProjectPage from "./pages/ProjectPage";
-import UserLinksPage from "./pages/UserLinksPage";
-import Page from "./components/layout/Page";
+import { CreateCategoryPage } from "./pages/CreateCategoryPage";
+import { CreateProjectPage } from "./pages/CreateProjectPage";
+import { CreateUserLinkPage } from "./pages/CreateUserLinkPage";
+import { ProcessUserLinkPage } from "./pages/ProcessUserLinkPage";
+import { ProjectPage } from "./pages/ProjectPage";
+import { UserLinksPage } from "./pages/UserLinksPage";
+import { Page } from "./components/layout/Page";
 
-function Router() {
+export function Router() {
   return (
     <HashRouter>
       <Page>
@@ -27,5 +27,3 @@ function Router() {
     </HashRouter>
   );
 }
-
-export default Router;

@@ -1,33 +1,33 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import CategoryTiles from "../components/category/CategoryTiles";
-import ExpenseForBuyDateBarChart from "../components/expense/ExpenseForBuyDateBarChart";
-import ExpenseForm from "../components/expense/ExpenseForm";
-import ExpenseTable from "../components/expense/ExpenseTable";
-import PageLoader from "../components/shared/PageLoader";
+import { CategoryTiles } from "../components/category/CategoryTiles";
+import { ExpenseForBuyDateBarChart } from "../components/expense/ExpenseForBuyDateBarChart";
+import { ExpenseForm } from "../components/expense/ExpenseForm";
+import { ExpenseTable } from "../components/expense/ExpenseTable";
+import { PageLoader } from "../components/shared/PageLoader";
 import { useExpenses } from "../hooks/expense/useExpenses.hook";
 import { useProjects } from "../hooks/project/useProjects.hook";
 import { usePassphraseStore } from "../store/project-auth.store";
 import { useUserStore } from "../store/user.store";
-import AuthProjectPage from "./AuthProjectPage";
+import { AuthProjectPage } from "./AuthProjectPage";
 import { Badge, Button, Spinner } from "flowbite-react";
 import { useDeleteProject } from "../hooks/project/useDeleteProject.hook";
 import { useUpdateProject } from "../hooks/project/useUpdateProject.hook";
 
-function ProjectPage() {
+export function ProjectPage() {
   const { projectId: projectIdString } = useParams();
   const { projects, areProjectsLoading } = useProjects();
   const allProjects = [...projects.personal, ...projects.shared];
   const projectId = Number(projectIdString);
   const project = allProjects.find((project) => project.id === projectId);
   const passphraseInStore = usePassphraseStore((state) =>
-    state.passphrases.find((x) => x.projectId === projectId)
+    state.passphrases.find((x) => x.projectId === projectId),
   );
   const { expenses, areExpensesLoading } = useExpenses(
     projectId,
     !!project?.isEncrypted,
     !areProjectsLoading,
-    passphraseInStore?.passphrase
+    passphraseInStore?.passphrase,
   );
   const userId = useUserStore((state) => state.user?.userId);
   const isOwned = project?.userId === userId;
@@ -136,5 +136,3 @@ function ProjectPage() {
     </PageLoader>
   );
 }
-
-export default ProjectPage;

@@ -1,10 +1,10 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { useCreateUserLink } from "../../hooks/user-link/useCreateUserLink.hook";
 import { useNavigate } from "react-router-dom";
-import FormGroup from "../form/FormGroup";
+import { FormGroup } from "../form/FormGroup";
 import { Button, TextInput } from "flowbite-react";
 
-function UserLinkForm() {
+export function UserLinkForm() {
   const { register, handleSubmit, reset } = useForm();
   const { createUserLink } = useCreateUserLink();
   const navigate = useNavigate();
@@ -32,5 +32,3 @@ function UserLinkForm() {
     </form>
   );
 }
-
-export default UserLinkForm;

@@ -1,19 +1,19 @@
 import { useCategories } from "../../hooks/category/useCategories.hook";
 import { Expense } from "../../models/expense";
-import ExpenseForTypePieChart from "../expense/ExpenseForTypePieChart";
+import { ExpenseForTypePieChart } from "../expense/ExpenseForTypePieChart";
 
 interface Props {
   projectId: number;
   expenses: Expense[];
 }
 
-function CategoryTiles({ projectId, expenses }: Props) {
+export function CategoryTiles({ projectId, expenses }: Props) {
   const { categories } = useCategories(projectId);
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
       {categories.map((category) => {
         const categoryExpenses = expenses.filter(
-          (expense) => expense.categoryId === category.id
+          (expense) => expense.categoryId === category.id,
         );
 
         if (categoryExpenses.length === 0) return null;
@@ -35,5 +35,3 @@ function CategoryTiles({ projectId, expenses }: Props) {
     </div>
   );
 }
-
-export default CategoryTiles;

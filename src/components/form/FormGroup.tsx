@@ -7,7 +7,7 @@ interface Props {
   children: ReactNode;
 }
 
-function FormGroup({ id, label, children }: Props) {
+export function FormGroup({ id, label, children }: Props) {
   return (
     <div className="mb-4">
       <div className="mb-2">
@@ -17,5 +17,3 @@ function FormGroup({ id, label, children }: Props) {
     </div>
   );
 }
-
-export default FormGroup;

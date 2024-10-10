@@ -22,7 +22,12 @@ interface Props {
   passphrase: string | undefined;
 }
 
-function ExpenseTable({ projectId, expenses, readOnly, passphrase }: Props) {
+export function ExpenseTable({
+  projectId,
+  expenses,
+  readOnly,
+  passphrase,
+}: Props) {
   const { removeExpense, isRemovingExpense } = useRemoveExpense();
   const { updateExpense, isUpdatingExpense } = useUpdateExpense();
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -122,7 +127,7 @@ function ExpenseTable({ projectId, expenses, readOnly, passphrase }: Props) {
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
     params,
-    event
+    event,
   ) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
@@ -150,7 +155,7 @@ function ExpenseTable({ projectId, expenses, readOnly, passphrase }: Props) {
 
   const processRowUpdate = (
     updatedExpense: GridRowModel<Expense>,
-    old: GridRowModel<Expense>
+    old: GridRowModel<Expense>,
   ) => {
     updateExpense({
       expenseId: updatedExpense.id,
@@ -177,7 +182,7 @@ function ExpenseTable({ projectId, expenses, readOnly, passphrase }: Props) {
       style={{ width: "100%" }}
       rows={rows}
       columns={columns.filter((column) =>
-        readOnly ? column.field !== "actions" : true
+        readOnly ? column.field !== "actions" : true,
       )}
       rowModesModel={rowModesModel}
       onRowModesModelChange={handleRowModesModelChange}
@@ -198,5 +203,3 @@ function ExpenseTable({ projectId, expenses, readOnly, passphrase }: Props) {
     />
   );
 }
-
-export default ExpenseTable;

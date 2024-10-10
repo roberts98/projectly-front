@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useProcessUserLink } from "../hooks/user-link/useProcessUserLink.hook";
 import { useVerifyUserLink } from "../hooks/user-link/useVerifyUserLink.hook";
 
-function ProcessUserLinkPage() {
+export function ProcessUserLinkPage() {
   const { "*": hash } = useParams();
   const { verifyUserLink, isError } = useVerifyUserLink();
   const { processUserLink } = useProcessUserLink();
@@ -34,5 +34,3 @@ function ProcessUserLinkPage() {
     </form>
   );
 }
-
-export default ProcessUserLinkPage;

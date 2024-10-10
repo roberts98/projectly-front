@@ -6,10 +6,10 @@ interface Props {
   expenses: Expense[];
 }
 
-function ExpenseForTypePieChart({ expenses }: Props) {
+export function ExpenseForTypePieChart({ expenses }: Props) {
   const groupedExpenses = _.groupBy(
     expenses,
-    (expense) => expense.subcategoryId
+    (expense) => expense.subcategoryId,
   );
   const data = Object.keys(groupedExpenses).map((key) => {
     const grouped = groupedExpenses[key];
@@ -33,5 +33,3 @@ function ExpenseForTypePieChart({ expenses }: Props) {
     />
   );
 }
-
-export default ExpenseForTypePieChart;

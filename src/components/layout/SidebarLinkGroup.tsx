@@ -4,7 +4,7 @@ interface Props {
   children: (handleClick: () => void, open: boolean) => ReactNode;
 }
 
-function SidebarLinkGroup({ children }: Props) {
+export function SidebarLinkGroup({ children }: Props) {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleClick = () => {
@@ -13,5 +13,3 @@ function SidebarLinkGroup({ children }: Props) {
 
   return <li>{children(handleClick, open)}</li>;
 }
-
-export default SidebarLinkGroup;

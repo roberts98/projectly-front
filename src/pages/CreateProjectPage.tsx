@@ -1,6 +1,6 @@
-import ProjectForm from "../components/project/ProjectForm";
+import { ProjectForm } from "../components/project/ProjectForm";
 
-function CreateProjectPage() {
+export function CreateProjectPage() {
   return (
     <div className="max-w-3xl m-auto">
       <h1 className="mb-10 text-3xl text-center">Stwórz nowy projekt</h1>
@@ -8,5 +8,3 @@ function CreateProjectPage() {
     </div>
   );
 }
-
-export default CreateProjectPage;

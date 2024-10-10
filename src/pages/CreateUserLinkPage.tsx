@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import UserLinkForm from "../components/user-link/UserLinkForm";
+import { UserLinkForm } from "../components/user-link/UserLinkForm";
 import { useUserLink } from "../hooks/user-link/useUserLinks.hook";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
-function CreateUserLinkPage() {
+export function CreateUserLinkPage() {
   const { userLink } = useUserLink();
   const navigate = useNavigate();
 
@@ -24,5 +24,3 @@ function CreateUserLinkPage() {
     </div>
   );
 }
-
-export default CreateUserLinkPage;

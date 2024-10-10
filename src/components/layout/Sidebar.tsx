@@ -9,14 +9,14 @@ import {
 import { Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useProjects } from "../../hooks/project/useProjects.hook";
-import SidebarLinkGroup from "./SidebarLinkGroup";
+import { SidebarLinkGroup } from "./SidebarLinkGroup";
 
 interface Props {
   sidebarOpen: boolean;
   setSidebarOpen: (isOpen: boolean) => void;
 }
 
-function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
+export function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
   const {
     projects: { personal, shared },
     areProjectsLoading,
@@ -175,5 +175,3 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
     </aside>
   );
 }
-
-export default Sidebar;

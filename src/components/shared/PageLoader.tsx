@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode;
 }
 
-function PageLoader({ active, children }: Props) {
+export function PageLoader({ active, children }: Props) {
   if (active) {
     return (
       <div className="h-screen flex justify-center items-center">
@@ -17,5 +17,3 @@ function PageLoader({ active, children }: Props) {
     return children;
   }
 }
-
-export default PageLoader;

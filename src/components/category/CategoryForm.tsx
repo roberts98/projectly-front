@@ -2,7 +2,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useProjects } from "../../hooks/project/useProjects.hook";
 import { useCreateCategory } from "../../hooks/category/useCreateCategoryhook";
 
-function CategoryForm() {
+export function CategoryForm() {
   const {
     projects: { personal },
   } = useProjects();
@@ -35,5 +35,3 @@ function CategoryForm() {
     </form>
   );
 }
-
-export default CategoryForm;

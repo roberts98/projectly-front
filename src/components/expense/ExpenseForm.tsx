@@ -5,14 +5,14 @@ import { useCategories } from "../../hooks/category/useCategories.hook";
 import { useCreateExpense } from "../../hooks/expense/useCreateExpense.hook";
 import { useSubcategories } from "../../hooks/subcategory/useSubcategories.hook";
 import { NewExpense } from "../../models/expense";
-import FormGroup from "../form/FormGroup";
+import { FormGroup } from "../form/FormGroup";
 
 interface Props {
   projectId: number;
   passphrase?: string;
 }
 
-function ExpenseForm({ projectId, passphrase }: Props) {
+export function ExpenseForm({ projectId, passphrase }: Props) {
   const { categories } = useCategories(projectId);
   const { control, register, handleSubmit, reset, watch } = useForm();
   const { createExpense, isCreatingExpense } = useCreateExpense();
@@ -28,7 +28,7 @@ function ExpenseForm({ projectId, passphrase }: Props) {
       itemName,
       subcategoryId: subcategoryId,
       subcategory: subcategories.find(
-        (subcategory) => subcategory.id === subcategoryId
+        (subcategory) => subcategory.id === subcategoryId,
       )!.name,
       cost: Number(cost),
       deliveryCost: Number(deliveryCost) || undefined,
@@ -102,5 +102,3 @@ function ExpenseForm({ projectId, passphrase }: Props) {
     </form>
   );
 }
-
-export default ExpenseForm;

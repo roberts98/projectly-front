@@ -1,9 +1,9 @@
 import { Button, Spinner, TextInput } from "flowbite-react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useCreateProject } from "../../hooks/project/useCreateProject.hook";
-import FormGroup from "../form/FormGroup";
+import { FormGroup } from "../form/FormGroup";
 
-function ProjectForm() {
+export function ProjectForm() {
   const { register, handleSubmit } = useForm();
   const { createProject, isCreatingProject } = useCreateProject();
 
@@ -38,5 +38,3 @@ function ProjectForm() {
     </form>
   );
 }
-
-export default ProjectForm;

@@ -6,7 +6,7 @@ interface Props {
   expenses: Expense[];
 }
 
-function ExpenseForProjectPieChart({ expenses }: Props) {
+export function ExpenseForProjectPieChart({ expenses }: Props) {
   const groupedExpenses = _.groupBy(expenses, (expense) => expense.categoryId);
   const data = Object.keys(groupedExpenses).map((key) => {
     const grouped = groupedExpenses[key];
@@ -30,5 +30,3 @@ function ExpenseForProjectPieChart({ expenses }: Props) {
     />
   );
 }
-
-export default ExpenseForProjectPieChart;
