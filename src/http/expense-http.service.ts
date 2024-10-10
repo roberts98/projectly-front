@@ -1,72 +1,47 @@
 import { Expense, NewExpense, UpdateExpense } from "../models/expense";
+import { baseAxios } from "./base-axios.ts";
 
 export class ExpenseHttpService {
   public static async fetchExpenses(
     projectId: number,
-    passphrase?: string
+    passphrase?: string,
   ): Promise<Expense[]> {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses/get`,
-      {
-        method: "POST",
-        body: JSON.stringify({ passphrase }),
-        credentials: "include",
-      }
-    );
-    const json = await response.json();
-    return json.data;
+    return baseAxios
+      .post(`/projects/${projectId}/expenses/get`, {
+        passphrase,
+      })
+      .then((response) => response.data.data);
   }
 
   public static async createExpense(
     expense: NewExpense,
-    projectId: number
+    projectId: number,
   ): Promise<number> {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/projects/${projectId}/expenses`,
-      {
-        method: "POST",
-        body: JSON.stringify(expense),
-        credentials: "include",
-      }
-    );
-    const json = await response.json();
-    return json.data;
+    return baseAxios
+      .post(`/projects/${projectId}/expenses`, expense)
+      .then((response) => response.data.data);
   }
 
   public static async updateExpense(
     projectId: number,
     expenseId: number,
     updateExpense: UpdateExpense,
-    passphrase?: string
+    passphrase?: string,
   ): Promise<null> {
-    const response = await fetch(
-      `${
-        import.meta.env.VITE_API_URL
-      }/projects/${projectId}/expenses/${expenseId}`,
-      {
-        method: "PUT",
-        body: JSON.stringify({ ...updateExpense, passphrase }),
-        credentials: "include",
-      }
-    );
-    const json = await response.json();
-    return json.data;
+    return baseAxios
+      .put(`/projects/${projectId}/expenses/${expenseId}`, {
+        ...updateExpense,
+        passphrase,
+      })
+      .then((response) => response.data.data);
   }
 
   public static async removeExpense(
     projectId: number,
-    expenseId: number
+    expenseId: number,
   ): Promise<null> {
-    const response = await fetch(
-      `${
-        import.meta.env.VITE_API_URL
-      }/projects/${projectId}/expenses/${expenseId}`,
-      {
-        method: "DELETE",
-        credentials: "include",
-      }
-    );
-    const json = await response.json();
-    return json.data;
+    return baseAxios
+      .delete(`/projects/${projectId}/expenses/${expenseId}`)
+      .then((response) => response.data.data);
   }
 }

@@ -1,53 +1,29 @@
 import { UserLink } from "../models/userLink";
+import { baseAxios } from "./base-axios.ts";
 
 export class UserLinkHttpService {
   public static async createUserLink(passphrase: string): Promise<UserLink> {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/user-links`, {
-      method: "POST",
-      body: JSON.stringify({ passphrase }),
-      credentials: "include",
-    });
-    const json = await response.json();
-    return json.data;
+    return baseAxios
+      .post("/user-links", { passphrase })
+      .then((response) => response.data.data);
   }
 
   public static async fetchUserLinks(): Promise<UserLink | undefined> {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/user-links`, {
-      credentials: "include",
-    });
-    const json = await response.json();
-    return json.data;
+    return baseAxios.get("/user-links").then((response) => response.data.data);
   }
 
   public static async verifyUserLink(hash: string): Promise<null> {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/user-links/verify`,
-      {
-        method: "POST",
-        body: JSON.stringify({ hash }),
-        credentials: "include",
-      }
-    );
-    const json = await response.json();
-    return json.data;
+    return baseAxios
+      .post("/user-links/verify", { hash })
+      .then((response) => response.data.data);
   }
 
   public static async processUserLink(
     hash: string,
-    passphrase: string
+    passphrase: string,
   ): Promise<null> {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/user-links/process`,
-      {
-        method: "POST",
-        body: JSON.stringify({ hash, passphrase }),
-        credentials: "include",
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Error");
-    }
-    const json = await response.json();
-    return json.data;
+    return baseAxios
+      .post("/user-links/process", { hash, passphrase })
+      .then((response) => response.data.data);
   }
 }

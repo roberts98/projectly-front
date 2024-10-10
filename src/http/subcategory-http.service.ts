@@ -1,36 +1,25 @@
 import { Subcategory } from "../models/subcategory";
+import { baseAxios } from "./base-axios.ts";
 
 export class SubcategoryHttpService {
   public static async fetchSubcategories(
     categoryId: number,
-    projectId: number
+    projectId: number,
   ): Promise<Subcategory[]> {
-    const response = await fetch(
-      `${
-        import.meta.env.VITE_API_URL
-      }/projects/${projectId}/categories/${categoryId}/subcategories`,
-      { credentials: "include" }
-    );
-    const json = await response.json();
-    return json.data;
+    return baseAxios
+      .get(`/projects/${projectId}/categories/${categoryId}/subcategories`)
+      .then((response) => response.data.data);
   }
 
   public static async createSubcategory(
     categoryId: number,
     name: string,
-    projectId: number
+    projectId: number,
   ): Promise<number> {
-    const response = await fetch(
-      `${
-        import.meta.env.VITE_API_URL
-      }/projects/${projectId}/categories/${categoryId}/subcategories`,
-      {
-        method: "POST",
-        body: JSON.stringify({ name }),
-        credentials: "include",
-      }
-    );
-    const json = await response.json();
-    return json.data;
+    return baseAxios
+      .post(`/projects/${projectId}/categories/${categoryId}/subcategories`, {
+        name,
+      })
+      .then((response) => response.data.data);
   }
 }
