@@ -1,4 +1,4 @@
-import { NewProject, ProjectsDto } from "../models/project";
+import { NewProject, ProjectsDto, ProjectUpdate } from "../models/project";
 import { ProjectPassphrase } from "../store/project-auth.store";
 
 export class ProjectHttpService {
@@ -16,6 +16,22 @@ export class ProjectHttpService {
       body: JSON.stringify({ ...project, isPersonal: true }),
       credentials: "include",
     });
+    const json = await response.json();
+    return json.data;
+  }
+
+  public static async updateProject(
+    projectId: number,
+    data: ProjectUpdate
+  ): Promise<null> {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(data),
+        credentials: "include",
+      }
+    );
     const json = await response.json();
     return json.data;
   }

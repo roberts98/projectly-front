@@ -12,6 +12,7 @@ import { useUserStore } from "../store/user.store";
 import AuthProjectPage from "./AuthProjectPage";
 import { Badge, Button, Spinner } from "flowbite-react";
 import { useDeleteProject } from "../hooks/project/useDeleteProject.hook";
+import { useUpdateProject } from "../hooks/project/useUpdateProject.hook";
 
 function ProjectPage() {
   const { projectId: projectIdString } = useParams();
@@ -30,6 +31,7 @@ function ProjectPage() {
   );
   const userId = useUserStore((state) => state.user?.userId);
   const isOwned = project?.userId === userId;
+  const { updateProject, isUpdatingProject } = useUpdateProject();
   const { deleteProject, isDeletingProject } = useDeleteProject();
 
   useEffect(() => {
@@ -42,6 +44,11 @@ function ProjectPage() {
 
   if (project?.isEncrypted && !passphraseInStore) {
     return <AuthProjectPage projectId={projectId} />;
+  }
+
+  function handlePersonalButtonClick() {
+    const updateRequest = { isPersonal: !project?.isPersonal };
+    updateProject({ projectId, updateRequest });
   }
 
   function handleRemoveClick() {
@@ -62,18 +69,34 @@ function ProjectPage() {
           )}
           <h2 className="text-3xl">{project?.name}</h2>
         </div>
-        {isOwned &&
-          (isDeletingProject ? (
-            <Spinner />
-          ) : (
-            <Button
-              color="failure"
-              onClick={handleRemoveClick}
-              disabled={isDeletingProject}
-            >
-              Usuń projekt
-            </Button>
-          ))}
+        {isOwned && (
+          <div className="flex">
+            {isUpdatingProject ? (
+              <Spinner />
+            ) : (
+              <Button
+                onClick={handlePersonalButtonClick}
+                color="dark"
+                className="mr-5"
+              >
+                {project?.isPersonal
+                  ? "Upublicznij projekt"
+                  : "Oznacz projekt jako prywatny"}
+              </Button>
+            )}
+            {isDeletingProject ? (
+              <Spinner />
+            ) : (
+              <Button
+                color="failure"
+                onClick={handleRemoveClick}
+                disabled={isDeletingProject}
+              >
+                Usuń projekt
+              </Button>
+            )}
+          </div>
+        )}
       </div>
       <CategoryTiles projectId={projectId} expenses={expenses} />
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">

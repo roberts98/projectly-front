@@ -15,3 +15,7 @@ export interface NewProject {
   name: string;
   passphrase: string;
 }
+
+export interface ProjectUpdate {
+  isPersonal?: boolean;
+}
