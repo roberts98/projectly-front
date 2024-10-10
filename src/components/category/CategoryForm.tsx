@@ -1,16 +1,18 @@
 import { FieldValues, useForm } from "react-hook-form";
-import { useProjects } from "../../hooks/project/useProjects.hook";
-import { useCreateCategory } from "../../hooks/category/useCreateCategoryhook";
+import { useCreateCategory } from "../../hooks/category/useCreateCategory.hook.ts";
+import { FormGroup } from "../form/FormGroup.tsx";
+import { Button, Spinner, TextInput } from "flowbite-react";
 
-export function CategoryForm() {
-  const {
-    projects: { personal },
-  } = useProjects();
+interface Props {
+  projectId: number;
+}
+
+export function CategoryForm({ projectId }: Props) {
   const { register, handleSubmit, reset } = useForm();
-  const { createCategory } = useCreateCategory();
+  const { createCategory, isCreatingCategory } = useCreateCategory();
 
   function onSubmit(formValues: FieldValues) {
-    const { name, projectId } = formValues;
+    const { name } = formValues;
 
     createCategory({ name, projectId });
     reset();
@@ -18,20 +20,12 @@ export function CategoryForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        {...register("name")}
-        type="text"
-        placeholder="Nazwa kategorii"
-        required
-      />
-      <select {...register("projectId")} required>
-        {personal.map((project) => (
-          <option key={project.id} value={project.id}>
-            {project.name}
-          </option>
-        ))}
-      </select>
-      <button type="submit">Stwórz kategorię</button>
+      <FormGroup id="passphrase" label="Nazwa kategorii">
+        <TextInput sizing="lg" id="name" {...register("name")} required />
+      </FormGroup>
+      <Button className="ml-auto min-w-35" type="submit">
+        {isCreatingCategory ? <Spinner size="sm" /> : "Stwórz kategorię"}
+      </Button>
     </form>
   );
 }

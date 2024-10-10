@@ -1,5 +1,4 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { CreateCategoryPage } from "./pages/CreateCategoryPage";
 import { CreateProjectPage } from "./pages/CreateProjectPage";
 import { CreateUserLinkPage } from "./pages/CreateUserLinkPage";
 import { ProcessUserLinkPage } from "./pages/ProcessUserLinkPage";
@@ -15,7 +14,6 @@ export function Router() {
           <Route path="/" element={<CreateProjectPage />} />
           <Route path="/projects/:projectId" element={<ProjectPage />} />
           <Route path="/projects/create" element={<CreateProjectPage />} />
-          <Route path="/categories/create" element={<CreateCategoryPage />} />
           <Route
             path="/user-links/process/*"
             element={<ProcessUserLinkPage />}

@@ -9,18 +9,18 @@ interface Data {
 }
 
 export function useCreateCategory() {
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: ({ projectId, name }: Data) =>
       CategoryHttpService.createCategory(projectId, name),
     onSuccess: (id, { name, projectId }) =>
       queryClient.setQueryData(
-        ["categories"],
+        [`categories-${projectId}`],
         (oldData: Category[]): Category[] => [
           ...oldData,
           { id, name, projectId },
-        ]
+        ],
       ),
   });
 
-  return { createCategory: mutate };
+  return { createCategory: mutate, isCreatingCategory: isPending };
 }

@@ -4,14 +4,13 @@ import { ExpenseHttpService } from "../../http/expense-http.service";
 export function useExpenses(
   projectId: number,
   secured: boolean,
-  ready: boolean,
-  passphrase?: string
+  passphrase?: string,
 ) {
   const { data: expenses = [], isLoading } = useQuery({
     queryKey: [`expenses-${projectId}`],
     queryFn: () => ExpenseHttpService.fetchExpenses(projectId, passphrase),
     staleTime: Infinity,
-    enabled: secured ? ready && !!passphrase : ready,
+    enabled: secured ? !!passphrase : true,
   });
 
   return { expenses, areExpensesLoading: isLoading };

@@ -7,7 +7,7 @@ interface Props {
   projectId: number;
 }
 
-export function AuthForm({ projectId }: Props) {
+export function ProjectAuthorizeForm({ projectId }: Props) {
   const { register, handleSubmit } = useForm();
   const { authProject, isAuthorizingProject } = useAuthProject();
 
