@@ -2,6 +2,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import PageLoader from "./components/shared/PageLoader";
 import { BootstrapHttpService } from "./http/bootstrap-http.service";
 import { queryClient } from "./query-client";
 import Router from "./Router";
@@ -18,7 +19,12 @@ function App() {
     });
   }, [setUserInfo]);
 
-  if (!ready) return null;
+  if (!ready)
+    return (
+      <PageLoader active={!ready}>
+        <></>
+      </PageLoader>
+    );
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Spinner } from "flowbite-react";
 import { ReactNode } from "react";
 
 interface Props {
@@ -9,14 +9,9 @@ interface Props {
 function PageLoader({ active, children }: Props) {
   if (active) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="calc(100vh - 48px)"
-      >
-        <CircularProgress />
-      </Box>
+      <div className="h-screen flex justify-center items-center">
+        <Spinner />
+      </div>
     );
   } else {
     return children;
