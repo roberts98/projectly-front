@@ -2,12 +2,14 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useAuthProject } from "../../hooks/project/useAuthProject.hook";
 import { TextInput, Button, Spinner } from "flowbite-react";
 import { FormGroup } from "../form/FormGroup";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   projectId: number;
 }
 
 export function ProjectAuthorizeForm({ projectId }: Props) {
+  const { t } = useTranslation();
   const { register, handleSubmit } = useForm();
   const { authProject, isAuthorizingProject } = useAuthProject();
 
@@ -19,7 +21,7 @@ export function ProjectAuthorizeForm({ projectId }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormGroup id="passphrase" label="Hasło dostępu">
+      <FormGroup id="passphrase" label={t("project.fields.passphrase")}>
         <TextInput
           sizing="lg"
           id="passphrase"
@@ -33,7 +35,7 @@ export function ProjectAuthorizeForm({ projectId }: Props) {
           <Spinner />
         ) : (
           <Button type="submit" size="xl">
-            Autoryzuj
+            {t("project.buttons.authorize")}
           </Button>
         )}
       </div>

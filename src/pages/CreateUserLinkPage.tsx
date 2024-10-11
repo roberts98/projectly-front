@@ -3,22 +3,24 @@ import { UserLinkForm } from "../components/user-link/UserLinkForm";
 import { useUserLink } from "../hooks/user-link/useUserLinks.hook";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 export function CreateUserLinkPage() {
+  const { t } = useTranslation();
   const { userLink } = useUserLink();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userLink) {
       navigate("/user-links/list");
-      toast("Posiadasz już link dostępu", { type: "info" });
+      toast(t("toasts.userLink.alreadyOwned"), { type: "info" });
     }
-  }, [userLink, navigate]);
+  }, [userLink, navigate, t]);
 
   return (
     <div className="max-w-3xl m-auto">
       <h1 className="mb-10 text-3xl text-center">
-        Stwórz indywidualny link dostępu
+        {t("userLink.typography.new")}
       </h1>
       <UserLinkForm />
     </div>

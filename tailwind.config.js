@@ -1,7 +1,6 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 const flowbite = require("flowbite-react/tailwind");
-const { flow } = require("lodash");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

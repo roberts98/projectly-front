@@ -1,4 +1,5 @@
 import { Button, Modal } from "flowbite-react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   content: string;
@@ -8,9 +9,10 @@ interface Props {
 }
 
 export function ConfirmModal({ content, show, onConfirm, onClose }: Props) {
+  const { t } = useTranslation();
   return (
     <Modal show={show} onClose={onClose}>
-      <Modal.Header>Potwierdź akcję</Modal.Header>
+      <Modal.Header>{t("general.typography.confirm")}</Modal.Header>
       <Modal.Body>
         <div className="space-y-6">
           <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
@@ -19,9 +21,9 @@ export function ConfirmModal({ content, show, onConfirm, onClose }: Props) {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={onConfirm}>Potwierdź</Button>
+        <Button onClick={onConfirm}>{t("general.confirm")}</Button>
         <Button color="gray" onClick={onClose}>
-          Odrzuć
+          {t("general.cancel")}
         </Button>
       </Modal.Footer>
     </Modal>

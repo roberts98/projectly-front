@@ -2,12 +2,14 @@ import dayjs from "dayjs";
 import { Expense } from "../../models/expense";
 import { Box } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   expenses: Expense[];
 }
 
 export function ExpenseForBuyDateBarChart({ expenses }: Props) {
+  const { t } = useTranslation();
   const dataByMonthAndCategory = expenses.reduce(
     (acc: Record<string, Record<string, number>>, expense) => {
       const month = dayjs(expense.buyDate).format("YYYY-MM");
@@ -45,8 +47,8 @@ export function ExpenseForBuyDateBarChart({ expenses }: Props) {
   return (
     <Box sx={{ width: "100%", height: 400 }}>
       <BarChart
-        xAxis={[{ label: "Month", data: months, scaleType: "band" }]}
-        yAxis={[{ label: "Total Cost" }]}
+        xAxis={[{ label: t("general.month"), data: months, scaleType: "band" }]}
+        yAxis={[{ label: t("general.total") }]}
         series={categories.map((category) => ({
           label: category,
           data: months.map((month) => {

@@ -6,6 +6,7 @@ import { useCreateExpense } from "../../hooks/expense/useCreateExpense.hook";
 import { useSubcategories } from "../../hooks/subcategory/useSubcategories.hook";
 import { NewExpense } from "../../models/expense";
 import { FormGroup } from "../form/FormGroup";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   projectId: number;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function ExpenseForm({ projectId, passphrase }: Props) {
+  const { t } = useTranslation();
   const { categories } = useCategories(projectId);
   const { control, register, handleSubmit, reset, watch } = useForm();
   const { createExpense, isCreatingExpense } = useCreateExpense();
@@ -41,17 +43,17 @@ export function ExpenseForm({ projectId, passphrase }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormGroup id="buyDate" label="Data kupna">
+      <FormGroup id="buyDate" label={t("expense.fields.buyDate")}>
         <Controller
           control={control}
           name="buyDate"
           render={({ field }) => <Datepicker onChange={field.onChange} />}
         />
       </FormGroup>
-      <FormGroup id="itemName" label="Nazwa przedmiotu">
+      <FormGroup id="itemName" label={t("expense.fields.itemName")}>
         <TextInput id="itemName" {...register("itemName")} required />
       </FormGroup>
-      <FormGroup id="category" label="Kategoria">
+      <FormGroup id="category" label={t("expense.fields.category")}>
         <Select
           id="category"
           {...register("categoryId", { setValueAs: Number })}
@@ -59,7 +61,7 @@ export function ExpenseForm({ projectId, passphrase }: Props) {
           required
         >
           <option value="" disabled>
-            Wybierz kategorię
+            {t("expense.placeholders.category")}
           </option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -68,7 +70,7 @@ export function ExpenseForm({ projectId, passphrase }: Props) {
           ))}
         </Select>
       </FormGroup>
-      <FormGroup id="subcategory" label="Podkategoria">
+      <FormGroup id="subcategory" label={t("expense.fields.subcategory")}>
         <Select
           id="subcategory"
           {...register("subcategoryId", { setValueAs: Number })}
@@ -77,7 +79,7 @@ export function ExpenseForm({ projectId, passphrase }: Props) {
           required
         >
           <option value="" disabled>
-            Wybierz podkategorię
+            {t("expense.placeholders.subcategory")}
           </option>
           {subcategories.map((subcategory) => (
             <option key={subcategory.id} value={subcategory.id}>
@@ -86,10 +88,10 @@ export function ExpenseForm({ projectId, passphrase }: Props) {
           ))}
         </Select>
       </FormGroup>
-      <FormGroup id="cost" label="Kwota w PLN">
+      <FormGroup id="cost" label={t("expense.fields.cost")}>
         <TextInput type="number" id="cost" {...register("cost")} required />
       </FormGroup>
-      <FormGroup id="deliveryCost" label="Kwota dostawy w PLN">
+      <FormGroup id="deliveryCost" label={t("expense.fields.deliveryCost")}>
         <TextInput
           type="number"
           id="deliveryCost"
@@ -97,7 +99,11 @@ export function ExpenseForm({ projectId, passphrase }: Props) {
         />
       </FormGroup>
       <div className="ml-auto flex justify-end">
-        {isCreatingExpense ? <Spinner /> : <Button type="submit">Dodaj</Button>}
+        {isCreatingExpense ? (
+          <Spinner />
+        ) : (
+          <Button type="submit">{t("expense.buttons.create")}</Button>
+        )}
       </div>
     </form>
   );

@@ -6,5 +6,5 @@ export function useVerifyUserLink() {
     mutationFn: (hash: string) => UserLinkHttpService.verifyUserLink(hash),
   });
 
-  return { verifyUserLink: mutate, isError };
+  return { verifyUserLink: mutate, isVerifyingError: isError };
 }

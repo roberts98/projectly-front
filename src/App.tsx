@@ -19,6 +19,10 @@ export function App() {
     });
   }, [setUserInfo]);
 
+  useEffect(() => {
+    localStorage.setItem("i18nextLng", navigator.language);
+  }, []);
+
   if (!ready)
     return (
       <PageLoader active={!ready}>

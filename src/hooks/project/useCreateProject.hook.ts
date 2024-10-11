@@ -5,8 +5,10 @@ import { queryClient } from "../../query-client";
 import { useUserStore } from "../../store/user.store";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 export function useCreateProject() {
+  const { t } = useTranslation();
   const userId = useUserStore((state) => state.user!.userId);
   const navigate = useNavigate();
 
@@ -28,10 +30,10 @@ export function useCreateProject() {
             shared: oldData.shared,
             personal: [...oldData.personal, newProject],
           };
-        }
+        },
       );
       navigate(`/projects/${id}`);
-      toast("Projekt utworzony", { type: "success" });
+      toast(t("toasts.project.created"), { type: "success" });
     },
   });
 

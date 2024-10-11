@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { ProjectHttpService } from "../../http/project-http.service";
 import { ProjectsDto, ProjectUpdate } from "../../models/project";
 import { queryClient } from "../../query-client";
+import { useTranslation } from "react-i18next";
 
 interface Data {
   projectId: number;
@@ -10,6 +11,7 @@ interface Data {
 }
 
 export function useUpdateProject() {
+  const { t } = useTranslation();
   const { mutate, isPending } = useMutation({
     mutationFn: ({ projectId, updateRequest }: Data) =>
       ProjectHttpService.updateProject(projectId, updateRequest),
@@ -30,9 +32,9 @@ export function useUpdateProject() {
               }
             }),
           };
-        }
+        },
       );
-      toast("Projekt zmodyfikowany", { type: "success" });
+      toast(t("toasts.project.modified"), { type: "success" });
     },
   });
 

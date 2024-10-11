@@ -1,0 +1,108 @@
+{
+  "general": {
+    "data": "Data",
+    "settings": "Settings",
+    "month": "Month",
+    "total": "Total",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "action": "Akcja",
+    "typography": {
+      "confirm": "Confirm action"
+    }
+  },
+  "menu": {
+    "privateProjects": "Private projects",
+    "publicProjects": "Public projects",
+    "createProject": "Add project",
+    "createUserLink": "Add access link",
+    "getUserLink": "Your access link"
+  },
+  "project": {
+    "typography": {
+      "new": "Create new project",
+      "authorize": "Project authorization",
+      "private": "Private",
+      "public": "Public",
+      "owned": "Owned by you",
+      "table": "Expenses table"
+    },
+    "fields": {
+      "name": "Project name",
+      "passphrase": "Passphrase"
+    },
+    "buttons": {
+      "create": "Create project",
+      "authorize": "Authorize",
+      "setPrivate": "Set as private",
+      "setPublic": "Set as public",
+      "delete": "Delete project"
+    }
+  },
+  "expense": {
+    "typography": {
+      "table": "Expenses table",
+      "new": "New expense"
+    },
+    "fields": {
+      "buyDate": "Purchase date",
+      "itemName": "Item name",
+      "category": "Category",
+      "subcategory": "Subcategory",
+      "cost": "Cost in PLN",
+      "deliveryCost": "Delivery cost in PLN"
+    },
+    "placeholders": {
+      "category": "Select category",
+      "subcategory": "Select subcategory"
+    },
+    "buttons": {
+      "create": "Add"
+    }
+  },
+  "category": {
+    "typography": {
+      "list": "Category list",
+      "new": "Add new category"
+    },
+    "fields": {
+      "name": "Category name"
+    },
+    "buttons": {
+      "create": "Create category"
+    },
+    "modals": {
+      "deleteConflict": "There are expenses for the selected category, are you sure you want to delete it? If you delete it, all expenses associated with it will also be removed."
+    }
+  },
+  "userLink": {
+    "typography": {
+      "new": "Create individual access link",
+      "own": "Your individual access link",
+      "verify": "Link authorization"
+    },
+    "fields": {
+      "passphrase": "Passphrase"
+    },
+    "buttons": {
+      "create": "Create access link",
+      "verify": "Verify"
+    }
+  },
+  "toasts": {
+    "project": {
+      "created": "Project created",
+      "modified": "Project modified",
+      "removed": "Project removed"
+    },
+    "expense": {
+      "created": "Expense created"
+    },
+    "userLink": {
+      "empty": "Create your access link first",
+      "alreadyOwned": "You already own an access link",
+      "verifyError": "Invalid access link, please check if it is correct"
+    }
+  }
+}

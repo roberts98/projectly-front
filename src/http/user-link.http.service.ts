@@ -8,8 +8,10 @@ export class UserLinkHttpService {
       .then((response) => response.data.data);
   }
 
-  public static async fetchUserLinks(): Promise<UserLink | undefined> {
-    return baseAxios.get("/user-links").then((response) => response.data.data);
+  public static async fetchUserLinks(): Promise<UserLink | null> {
+    return baseAxios
+      .get("/user-links")
+      .then((response) => response.data.data || null);
   }
 
   public static async verifyUserLink(hash: string): Promise<null> {

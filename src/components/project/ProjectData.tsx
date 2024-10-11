@@ -6,6 +6,7 @@ import { Project } from "../../models/project.ts";
 import { useExpenses } from "../../hooks/expense/useExpenses.hook.ts";
 import { Spinner } from "flowbite-react";
 import { useUserStore } from "../../store/user.store.ts";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   project: Project;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function ProjectData({ project, passphrase }: Props) {
+  const { t } = useTranslation();
   const { expenses, areExpensesLoading } = useExpenses(
     project.id,
     project.isEncrypted,
@@ -35,7 +37,7 @@ export function ProjectData({ project, passphrase }: Props) {
           }`}
         >
           <div className="flex h-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4 mb-5">
-            Tabela wydatków
+            {t("expense.typography.table")}
           </div>
           <div>
             <ExpenseTable
@@ -49,7 +51,7 @@ export function ProjectData({ project, passphrase }: Props) {
         {isOwned && (
           <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
             <div className="flex h-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4 mb-5">
-              Nowy wydatek
+              {t("expense.typography.new")}
             </div>
             <ExpenseForm projectId={project.id} passphrase={passphrase} />
           </div>

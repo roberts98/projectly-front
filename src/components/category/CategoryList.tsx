@@ -3,12 +3,14 @@ import { Button } from "flowbite-react";
 import { useDeleteCategory } from "../../hooks/category/useDeleteCategory.hook.ts";
 import { useEffect, useState } from "react";
 import { ConfirmModal } from "../shared/ConfirmModal.tsx";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   projectId: number;
 }
 
 export function CategoryList({ projectId }: Props) {
+  const { t } = useTranslation();
   const { categories } = useCategories(projectId);
   const { deleteCategory, isDeleteError } = useDeleteCategory();
   const [isDeleteConfirmModalOpen, setDeleteConfirmModalOpen] = useState(false);
@@ -37,10 +39,10 @@ export function CategoryList({ projectId }: Props) {
             color="failure"
             onClick={() => handleDeleteClick(category.id)}
           >
-            Usuń
+            {t("general.delete")}
           </Button>
           <ConfirmModal
-            content="Istnieją wydatki dla wybranej kategorii, czy na pewno chcesz ją usunąc? Jeżeli ją usuniesz, wszystkie wydatki z nią powiązane zostaną również usunięte."
+            content={t("category.modals.deleteConflict")}
             show={isDeleteConfirmModalOpen}
             onConfirm={() => handleModalConfirm(category.id)}
             onClose={() => setDeleteConfirmModalOpen(false)}

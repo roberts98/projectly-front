@@ -1,0 +1,108 @@
+{
+  "general": {
+    "data": "Dane",
+    "settings": "Ustawienia",
+    "month": "Miesiąc",
+    "total": "Suma",
+    "delete": "Usuń",
+    "confirm": "Potwierdź",
+    "cancel": "Odrzuć",
+    "action": "Akcja",
+    "typography": {
+      "confirm": "Potwierdź akcję"
+    }
+  },
+  "menu": {
+    "privateProjects": "Prywatne projekty",
+    "publicProjects": "Publiczne projekty",
+    "createProject": "Dodaj projekt",
+    "createUserLink": "Dodaj link dostępu",
+    "getUserLink": "Twój link dostepu"
+  },
+  "project": {
+    "typography": {
+      "new": "Stwórz nowy projekt",
+      "authorize": "Autoryzacja projektu",
+      "private": "Prywatny",
+      "public": "Publiczny",
+      "owned": "Twój",
+      "table": "Tabela wydatków"
+    },
+    "fields": {
+      "name": "Nazwa projektu",
+      "passphrase": "Hasło dostępu"
+    },
+    "buttons": {
+      "create": "Stwórz projekt",
+      "authorize": "Autoryzuj",
+      "setPrivate": "Ustaw jako prywatny",
+      "setPublic": "Ustaw jako publiczny",
+      "delete": "Usuń projekt"
+    }
+  },
+  "expense": {
+    "typography": {
+      "table": "Tabela wydatków",
+      "new": "Nowy wydatek"
+    },
+    "fields": {
+      "buyDate": "Data kupna",
+      "itemName": "Nazwa przedmiotu",
+      "category": "Kategoria",
+      "subcategory": "Podkategoria",
+      "cost": "Kwota w PLN",
+      "deliveryCost": "Kwota dostawy w PLN"
+    },
+    "placeholders": {
+      "category": "Wybierz kategorię",
+      "subcategory": "Wybierz podkategorię"
+    },
+    "buttons": {
+      "create": "Dodaj"
+    }
+  },
+  "category": {
+    "typography": {
+      "list": "Lista kategorii",
+      "new": "Dodaj nową kategorię"
+    },
+    "fields": {
+      "name": "Nazwa kategorii"
+    },
+    "buttons": {
+      "create": "Stwórz kategorię"
+    },
+    "modals": {
+      "deleteConflict": "Istnieją wydatki dla wybranej kategorii, czy na pewno chcesz ją usunąc? Jeżeli ją usuniesz, wszystkie wydatki z nią powiązane zostaną również usunięte."
+    }
+  },
+  "userLink": {
+    "typography": {
+      "new": "Stwórz indywidualny link dostępu",
+      "own": "Twój indywidualny kod dostępu",
+      "verify": "Autoryzacja linku"
+    },
+    "fields": {
+      "passphrase": "Hasło dostępu"
+    },
+    "buttons": {
+      "create": "Stwórz link dostępu",
+      "verify": "Weryfikuj"
+    }
+  },
+  "toasts": {
+    "project": {
+      "created": "Projekt utworzony",
+      "modified": "Projekt zmodyfikowany",
+      "removed": "Projekt usunięty"
+    },
+    "expense": {
+      "created": "Wydatek utworzony"
+    },
+    "userLink": {
+      "empty": "Najpierw musisz stworzyć link dostępu",
+      "alreadyOwned": "Posiadasz już link dostępu",
+      "verifyError": "Błędny link dostępu, sprawdź czy na pewno jest on poprawny"
+    }
+  }
+}

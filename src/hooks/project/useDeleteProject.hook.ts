@@ -4,8 +4,10 @@ import { toast } from "react-toastify";
 import { ProjectHttpService } from "../../http/project-http.service";
 import { ProjectsDto } from "../../models/project";
 import { queryClient } from "../../query-client";
+import { useTranslation } from "react-i18next";
 
 export function useDeleteProject() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { mutate, isPending } = useMutation({
@@ -17,16 +19,16 @@ export function useDeleteProject() {
         (oldData: ProjectsDto): ProjectsDto => {
           return {
             shared: oldData.shared.filter(
-              (project) => project.id !== projectId
+              (project) => project.id !== projectId,
             ),
             personal: oldData.personal.filter(
-              (project) => project.id !== projectId
+              (project) => project.id !== projectId,
             ),
           };
-        }
+        },
       );
       navigate(`/`);
-      toast("Projekt usunięty", { type: "success" });
+      toast(t("toasts.project.removed"), { type: "success" });
     },
   });
 

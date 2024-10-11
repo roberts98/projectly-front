@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useRemoveExpense } from "../../hooks/expense/useRemoveExpense.hook";
 import { useUpdateExpense } from "../../hooks/expense/useUpdateExpense.hook";
 import { Expense } from "../../models/expense";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   projectId: number;
@@ -28,6 +29,7 @@ export function ExpenseTable({
   readOnly,
   passphrase,
 }: Props) {
+  const { t } = useTranslation();
   const { removeExpense, isRemovingExpense } = useRemoveExpense();
   const { updateExpense, isUpdatingExpense } = useUpdateExpense();
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -39,28 +41,28 @@ export function ExpenseTable({
     },
     {
       field: "buyDate",
-      headerName: "Data kupna",
+      headerName: t("expense.fields.buyDate"),
       width: 100,
     },
     {
       field: "itemName",
-      headerName: "Nazwa",
+      headerName: t("expense.fields.itemName"),
       width: 200,
       editable: !readOnly,
     },
     {
       field: "category",
-      headerName: "Kategoria",
+      headerName: t("expense.fields.category"),
       width: 100,
     },
     {
       field: "subcategory",
-      headerName: "Podkategoria",
+      headerName: t("expense.fields.subcategory"),
       width: 100,
     },
     {
       field: "cost",
-      headerName: "Koszt",
+      headerName: t("expense.fields.cost"),
       type: "number",
       width: 100,
       editable: !readOnly,
@@ -68,7 +70,7 @@ export function ExpenseTable({
     },
     {
       field: "deliveryCost",
-      headerName: "Koszt dostawy",
+      headerName: t("expense.fields.deliveryCost"),
       type: "number",
       width: 140,
       editable: !readOnly,
@@ -77,7 +79,7 @@ export function ExpenseTable({
     {
       field: "actions",
       type: "actions",
-      headerName: "Akcja",
+      headerName: t("expense.fields.action"),
       width: 100,
       getActions: ({ id, row }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;

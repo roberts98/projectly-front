@@ -3,6 +3,7 @@ import { ExpenseHttpService } from "../../http/expense-http.service";
 import { Expense, NewExpense } from "../../models/expense";
 import { queryClient } from "../../query-client";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface Data {
   expense: NewExpense;
@@ -10,6 +11,7 @@ interface Data {
 }
 
 export function useCreateExpense() {
+  const { t } = useTranslation();
   const { mutate, isPending } = useMutation({
     mutationFn: ({ expense, projectId }: Data) =>
       ExpenseHttpService.createExpense(expense, projectId),
@@ -19,9 +21,9 @@ export function useCreateExpense() {
         (oldData: Expense[]): Expense[] => [
           { ...expense, id, projectId },
           ...oldData,
-        ]
+        ],
       );
-      toast("Wydatek utworzony", { type: "success" });
+      toast(t("toasts.expense.created"), { type: "success" });
     },
   });
 

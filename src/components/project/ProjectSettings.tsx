@@ -3,12 +3,14 @@ import { Project } from "../../models/project.ts";
 import { useUpdateProject } from "../../hooks/project/useUpdateProject.hook.ts";
 import { useDeleteProject } from "../../hooks/project/useDeleteProject.hook.ts";
 import { CategoryManagement } from "../category/CategoryManagement.tsx";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   project: Project;
 }
 
 export function ProjectSettings({ project }: Props) {
+  const { t } = useTranslation();
   const { updateProject, isUpdatingProject } = useUpdateProject();
   const { deleteProject, isDeletingProject } = useDeleteProject();
 
@@ -32,9 +34,9 @@ export function ProjectSettings({ project }: Props) {
           {isUpdatingProject ? (
             <Spinner size="sm" />
           ) : project.isPersonal ? (
-            "Ustaw jako publiczny"
+            t("project.buttons.setPublic")
           ) : (
-            "Ustaw jako prywatny"
+            t("project.buttons.setPrivate")
           )}
         </Button>
         <Button
@@ -44,7 +46,11 @@ export function ProjectSettings({ project }: Props) {
           className="min-w-29.5"
           size="sm"
         >
-          {isDeletingProject ? <Spinner size="sm" /> : "Usuń projekt"}
+          {isDeletingProject ? (
+            <Spinner size="sm" />
+          ) : (
+            t("project.buttons.delete")
+          )}
         </Button>
       </div>
       <CategoryManagement />

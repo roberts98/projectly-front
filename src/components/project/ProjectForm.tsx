@@ -2,8 +2,10 @@ import { Button, Spinner, TextInput } from "flowbite-react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useCreateProject } from "../../hooks/project/useCreateProject.hook";
 import { FormGroup } from "../form/FormGroup";
+import { useTranslation } from "react-i18next";
 
 export function ProjectForm() {
+  const { t } = useTranslation();
   const { register, handleSubmit } = useForm();
   const { createProject, isCreatingProject } = useCreateProject();
 
@@ -15,10 +17,10 @@ export function ProjectForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormGroup id="name" label="Nazwa projektu">
+      <FormGroup id="name" label={t("project.fields.name")}>
         <TextInput sizing="lg" id="name" {...register("name")} required />
       </FormGroup>
-      <FormGroup id="passphrase" label="Hasło dostępu">
+      <FormGroup id="passphrase" label={t("project.fields.passphrase")}>
         <TextInput
           sizing="lg"
           id="passphrase"
@@ -31,7 +33,7 @@ export function ProjectForm() {
           <Spinner />
         ) : (
           <Button type="submit" size="xl" disabled={isCreatingProject}>
-            Stwórz projekt
+            {t("project.buttons.create")}
           </Button>
         )}
       </div>

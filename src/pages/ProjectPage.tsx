@@ -9,8 +9,10 @@ import { ProjectData } from "../components/project/ProjectData.tsx";
 import { ProjectSettings } from "../components/project/ProjectSettings.tsx";
 import { ProjectHeader } from "../components/project/ProjectHeader.tsx";
 import { useUserStore } from "../store/user.store.ts";
+import { useTranslation } from "react-i18next";
 
 export function ProjectPage() {
+  const { t } = useTranslation();
   const { projectId: projectIdString } = useParams();
   const { projects, areProjectsLoading } = useProjects();
   const allProjects = [...projects.personal, ...projects.shared];
@@ -42,14 +44,14 @@ export function ProjectPage() {
     <section>
       <ProjectHeader project={project} isOwned={isOwned} />
       <Tabs>
-        <Tabs.Item title="Dane">
+        <Tabs.Item title={t("general.data")}>
           <ProjectData
             project={project}
             passphrase={passphraseInStore?.passphrase}
           />
         </Tabs.Item>
         {isOwned && (
-          <Tabs.Item title="Ustawienia">
+          <Tabs.Item title={t("general.settings")}>
             <ProjectSettings project={project} />
           </Tabs.Item>
         )}

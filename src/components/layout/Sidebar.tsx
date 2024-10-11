@@ -10,6 +10,7 @@ import { Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useProjects } from "../../hooks/project/useProjects.hook";
 import { SidebarLinkGroup } from "./SidebarLinkGroup";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   sidebarOpen: boolean;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
+  const { t } = useTranslation();
   const {
     projects: { personal, shared },
     areProjectsLoading,
@@ -74,7 +76,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                             handleClick();
                           }}
                         >
-                          <Lock fontSize="small" /> Prywatne projekty
+                          <Lock fontSize="small" /> {t("menu.privateProjects")}
                           {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
                         </Link>
                         <div
@@ -111,7 +113,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                             handleClick();
                           }}
                         >
-                          <Public fontSize="small" /> Publiczne projekty
+                          <Public fontSize="small" /> {t("menu.publicProjects")}
                           {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
                         </Link>
                         <div
@@ -141,7 +143,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                     className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                     to="/projects/create"
                   >
-                    <Create fontSize="small" /> Dodaj projekt
+                    <Create fontSize="small" /> {t("menu.createProject")}
                   </Link>
                 </li>
               </ul>
@@ -157,7 +159,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                   className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                   to="/user-links/create"
                 >
-                  <Lock fontSize="small" /> Dodaj link dostępu
+                  <Lock fontSize="small" /> {t("menu.createUserLink")}
                 </Link>
               </li>
               <li>
@@ -165,7 +167,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                   className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                   to="/user-links/list"
                 >
-                  <LockOpen fontSize="small" /> Twój link dostepu
+                  <LockOpen fontSize="small" /> {t("menu.getUserLink")}
                 </Link>
               </li>
             </ul>
