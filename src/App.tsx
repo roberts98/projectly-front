@@ -1,5 +1,3 @@
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { PageLoader } from "./components/shared/PageLoader";
@@ -32,9 +30,7 @@ export function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Router />
-      </LocalizationProvider>
+      <Router />
     </QueryClientProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { PieChart } from "@mui/x-charts";
+import { Pie } from "react-chartjs-2";
 import { Expense } from "../../models/expense";
 import _ from "lodash";
 
@@ -11,25 +11,23 @@ export function ExpenseForTypePieChart({ expenses }: Props) {
     expenses,
     (expense) => expense.subcategoryId,
   );
-  const data = Object.keys(groupedExpenses).map((key) => {
-    const grouped = groupedExpenses[key];
-    const totalCost = _.sumBy(grouped, "cost");
-    return {
-      id: parseInt(key),
-      value: totalCost,
-      label: grouped[0].subcategory,
-    };
-  });
+
+  const data = {
+    labels: Object.keys(groupedExpenses).map(
+      (key) => groupedExpenses[key][0].subcategory,
+    ),
+    datasets: [
+      {
+        data: Object.keys(groupedExpenses).map((key) =>
+          _.sumBy(groupedExpenses[key], "cost"),
+        ),
+      },
+    ],
+  };
 
   return (
-    <PieChart
-      series={[
-        {
-          data,
-        },
-      ]}
-      width={400}
-      height={200}
-    />
+    <div className="w-full">
+      <Pie height={250} options={{ maintainAspectRatio: false }} data={data} />
+    </div>
   );
 }

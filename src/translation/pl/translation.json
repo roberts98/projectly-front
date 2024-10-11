@@ -8,6 +8,7 @@
     "confirm": "Potwierdź",
     "cancel": "Odrzuć",
     "action": "Akcja",
+    "sum": "Suma",
     "typography": {
       "confirm": "Potwierdź akcję"
     }
@@ -103,6 +104,12 @@
       "empty": "Najpierw musisz stworzyć link dostępu",
       "alreadyOwned": "Posiadasz już link dostępu",
       "verifyError": "Błędny link dostępu, sprawdź czy na pewno jest on poprawny"
+    }
+  },
+  "charts": {
+    "names": {
+      "byCategory": "Wydatki z podziałem na kategorię",
+      "cumulativeSum": "Wykres sumy kosztów"
     }
   }
 }

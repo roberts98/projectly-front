@@ -7,6 +7,8 @@ import { useExpenses } from "../../hooks/expense/useExpenses.hook.ts";
 import { Spinner } from "flowbite-react";
 import { useUserStore } from "../../store/user.store.ts";
 import { useTranslation } from "react-i18next";
+import { ExpenseCumulativeChart } from "../expense/ExpenseCumulativeChart.tsx";
+import { ExpenseForProjectPieChart } from "../expense/ExpenseForProjectPieChart.tsx";
 
 interface Props {
   project: Project;
@@ -29,7 +31,6 @@ export function ProjectData({ project, passphrase }: Props) {
 
   return (
     <section>
-      <CategoryChartTiles projectId={project.id} expenses={expenses} />
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <div
           className={`col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 ${
@@ -56,7 +57,23 @@ export function ProjectData({ project, passphrase }: Props) {
             <ExpenseForm projectId={project.id} passphrase={passphrase} />
           </div>
         )}
-
+        <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-6">
+          <div className="flex h-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4 mb-4">
+            {t("charts.names.byCategory")}
+          </div>
+          <div>
+            <ExpenseForProjectPieChart expenses={expenses} />
+          </div>
+        </div>
+        <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-6">
+          <div className="flex h-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4 mb-4">
+            {t("charts.names.cumulativeSum")}
+          </div>
+          <div>
+            <ExpenseCumulativeChart expenses={expenses} />
+          </div>
+        </div>
+        <CategoryChartTiles projectId={project.id} expenses={expenses} />
         <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-12">
           <ExpenseForBuyDateBarChart expenses={expenses} />
         </div>

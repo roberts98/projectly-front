@@ -8,6 +8,7 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "action": "Akcja",
+    "sum": "Sum",
     "typography": {
       "confirm": "Confirm action"
     }
@@ -103,6 +104,12 @@
       "empty": "Create your access link first",
       "alreadyOwned": "You already own an access link",
       "verifyError": "Invalid access link, please check if it is correct"
+    }
+  },
+  "charts": {
+    "names": {
+      "byCategory": "Expenses by Category",
+      "cumulativeSum": "Cumulative Cost Chart"
     }
   }
 }
