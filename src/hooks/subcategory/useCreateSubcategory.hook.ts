@@ -10,19 +10,19 @@ interface Data {
 }
 
 export function useCreateSubcategory() {
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: ({ categoryId, name, projectId }: Data) =>
       SubcategoryHttpService.createSubcategory(categoryId, name, projectId),
     onSuccess: (id, { categoryId, name }) => {
       queryClient.setQueryData(
-        [`item-types${categoryId}`],
+        [`subcategories-${categoryId}`],
         (oldData: Subcategory[]): Subcategory[] => [
           ...oldData,
           { id, categoryId, name },
-        ]
+        ],
       );
     },
   });
 
-  return { createSubcategory: mutate };
+  return { createSubcategory: mutate, isCreatingSubcategory: isPending };
 }

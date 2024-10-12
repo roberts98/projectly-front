@@ -22,10 +22,10 @@ export class CategoryHttpService {
     categoryId: number,
     force?: boolean,
   ): Promise<null> {
-    let url = `/projects/${projectId}/categories/${categoryId}`;
-    if (force) {
-      url = url + "?force=true";
-    }
-    return baseAxios.delete(url).then((response) => response.data.data);
+    return baseAxios
+      .delete(`/projects/${projectId}/categories/${categoryId}`, {
+        params: { force },
+      })
+      .then((response) => response.data.data);
   }
 }

@@ -77,6 +77,21 @@
       "deleteConflict": "Istnieją wydatki dla wybranej kategorii, czy na pewno chcesz ją usunąc? Jeżeli ją usuniesz, wszystkie wydatki z nią powiązane zostaną również usunięte."
     }
   },
+  "subcategory": {
+    "typography": {
+      "list": "Lista podkategorii",
+      "new": "Dodaj nową podkategorię"
+    },
+    "fields": {
+      "name": "Nazwa podkategorii"
+    },
+    "buttons": {
+      "create": "Stwórz podkategorię"
+    },
+    "modals": {
+      "deleteConflict": "Istnieją wydatki dla wybranej podkategorii, czy na pewno chcesz ją usunąc? Jeżeli ją usuniesz, wszystkie wydatki z nią powiązane zostaną również usunięte."
+    }
+  },
   "userLink": {
     "typography": {
       "new": "Stwórz indywidualny link dostępu",

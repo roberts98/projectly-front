@@ -4,6 +4,7 @@ import { useDeleteCategory } from "../../hooks/category/useDeleteCategory.hook.t
 import { useEffect, useState } from "react";
 import { ConfirmModal } from "../shared/ConfirmModal.tsx";
 import { useTranslation } from "react-i18next";
+import { SubcategoryList } from "../subcategory/SubcategoryList.tsx";
 
 interface Props {
   projectId: number;
@@ -30,23 +31,25 @@ export function CategoryList({ projectId }: Props) {
   return (
     <div>
       {categories.map((category) => (
-        <div
-          className="flex justify-between items-center mb-5"
-          key={category.id}
-        >
-          <p>{category.name}</p>
-          <Button
-            color="failure"
-            onClick={() => handleDeleteClick(category.id)}
-          >
-            {t("general.delete")}
-          </Button>
-          <ConfirmModal
-            content={t("category.modals.deleteConflict")}
-            show={isDeleteConfirmModalOpen}
-            onConfirm={() => handleModalConfirm(category.id)}
-            onClose={() => setDeleteConfirmModalOpen(false)}
-          />
+        <div key={category.id}>
+          <div className="flex justify-between items-center mb-3">
+            <p>{category.name}</p>
+            <Button
+              color="failure"
+              onClick={() => handleDeleteClick(category.id)}
+            >
+              {t("general.delete")}
+            </Button>
+            <ConfirmModal
+              content={t("category.modals.deleteConflict")}
+              show={isDeleteConfirmModalOpen}
+              onConfirm={() => handleModalConfirm(category.id)}
+              onClose={() => setDeleteConfirmModalOpen(false)}
+            />
+          </div>
+          <div className="ml-5">
+            <SubcategoryList projectId={projectId} categoryId={category.id} />
+          </div>
         </div>
       ))}
     </div>

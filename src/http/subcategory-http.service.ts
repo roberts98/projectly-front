@@ -22,4 +22,20 @@ export class SubcategoryHttpService {
       })
       .then((response) => response.data.data);
   }
+
+  public static async deleteSubcategory(
+    subcategoryId: number,
+    categoryId: number,
+    projectId: number,
+    force?: boolean,
+  ): Promise<null> {
+    return baseAxios
+      .delete(
+        `/projects/${projectId}/categories/${categoryId}/subcategories/${subcategoryId}`,
+        {
+          params: { force },
+        },
+      )
+      .then((response) => response.data.data);
+  }
 }
