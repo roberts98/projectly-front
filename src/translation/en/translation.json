@@ -77,6 +77,21 @@
       "deleteConflict": "There are expenses for the selected category, are you sure you want to delete it? If you delete it, all expenses associated with it will also be removed."
     }
   },
+  "subcategory": {
+    "typography": {
+      "list": "Subcategory list",
+      "new": "Add new subcategory"
+    },
+    "fields": {
+      "name": "Subcategory name"
+    },
+    "buttons": {
+      "create": "Create subcategory"
+    },
+    "modals": {
+      "deleteConflict": "There are expenses for the selected subcategory, are you sure you want to delete it? If you delete it, all expenses associated with it will also be removed."
+    }
+  },
   "userLink": {
     "typography": {
       "new": "Create individual access link",
