@@ -89,11 +89,18 @@ export function ExpenseForm({ projectId, passphrase }: Props) {
         </Select>
       </FormGroup>
       <FormGroup id="cost" label={t("expense.fields.cost")}>
-        <TextInput type="number" id="cost" {...register("cost")} required />
+        <TextInput
+          type="number"
+          step={0.01}
+          id="cost"
+          {...register("cost")}
+          required
+        />
       </FormGroup>
       <FormGroup id="deliveryCost" label={t("expense.fields.deliveryCost")}>
         <TextInput
           type="number"
+          step={0.01}
           id="deliveryCost"
           {...register("deliveryCost")}
         />
