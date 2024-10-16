@@ -7,10 +7,18 @@
     "delete": "Delete",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "action": "Akcja",
+    "action": "Action",
     "sum": "Sum",
     "typography": {
       "confirm": "Confirm action"
+    }
+  },
+  "forms": {
+    "fields": {
+      "email": "Email address"
+    },
+    "buttons": {
+      "submit": "Submit"
     }
   },
   "menu": {
@@ -18,7 +26,12 @@
     "publicProjects": "Public projects",
     "createProject": "Add project",
     "createUserLink": "Add access link",
-    "getUserLink": "Your access link"
+    "getUserLink": "Your access link",
+    "user": "Your account"
+  },
+  "menuSections": {
+    "projects": "Projects",
+    "settings": "Settings"
   },
   "project": {
     "typography": {
@@ -119,6 +132,9 @@
       "empty": "Create your access link first",
       "alreadyOwned": "You already own an access link",
       "verifyError": "Invalid access link, please check if it is correct"
+    },
+    "user": {
+      "emailChanged": "Email address updated successfully"
     }
   },
   "charts": {

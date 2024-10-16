@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { UserLinkHttpService } from "../../http/user-link.http.service";
+import { UserLinkHttpService } from "../../http/user-link-http.service.ts";
 
 export function useUserLink() {
   const { data: userLink, isLoading } = useQuery({

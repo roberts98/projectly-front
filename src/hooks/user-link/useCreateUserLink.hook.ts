@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { UserLinkHttpService } from "../../http/user-link.http.service";
+import { UserLinkHttpService } from "../../http/user-link-http.service.ts";
 import { queryClient } from "../../query-client";
 
 export function useCreateUserLink() {

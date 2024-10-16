@@ -13,12 +13,25 @@
       "confirm": "Potwierdź akcję"
     }
   },
+  "forms": {
+    "fields": {
+      "email": "Adres e-mail"
+    },
+    "buttons": {
+      "submit": "Zatwierdź"
+    }
+  },
   "menu": {
     "privateProjects": "Prywatne projekty",
     "publicProjects": "Publiczne projekty",
     "createProject": "Dodaj projekt",
     "createUserLink": "Dodaj link dostępu",
-    "getUserLink": "Twój link dostepu"
+    "getUserLink": "Twój link dostepu",
+    "user": "Twoje konto"
+  },
+  "menuSections": {
+    "projects": "Projekty",
+    "settings": "Ustawienia"
   },
   "project": {
     "typography": {
@@ -119,6 +132,9 @@
       "empty": "Najpierw musisz stworzyć link dostępu",
       "alreadyOwned": "Posiadasz już link dostępu",
       "verifyError": "Błędny link dostępu, sprawdź czy na pewno jest on poprawny"
+    },
+    "user": {
+      "emailChanged": "Poprawnie zaktualizowano adres e-mail"
     }
   },
   "charts": {

@@ -4,6 +4,7 @@ import {
   KeyboardArrowUp,
   Lock,
   LockOpen,
+  Person,
   Public,
 } from "@mui/icons-material";
 import { Spinner } from "flowbite-react";
@@ -23,6 +24,74 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
     projects: { personal, shared },
     areProjectsLoading,
   } = useProjects();
+
+  const projectsMenu = [
+    {
+      id: "privateProjects",
+      name: t("menu.privateProjects"),
+      link: "#",
+      icon: <Lock fontSize="small" />,
+      children: personal.map((project) => ({
+        id: project.id,
+        name: project.name,
+        link: `/projects/${project.id}`,
+      })),
+    },
+    {
+      id: "publicProjects",
+      name: t("menu.publicProjects"),
+      link: "#",
+      icon: <Public fontSize="small" />,
+      children: shared.map((project) => ({
+        id: project.id,
+        name: project.name,
+        link: `/projects/${project.id}`,
+      })),
+    },
+    {
+      id: "createProject",
+      name: t("menu.createProject"),
+      link: "/projects/create",
+      icon: <Create fontSize="small" />,
+      children: [],
+    },
+  ];
+
+  const settingsMenu = [
+    {
+      id: "createUserLink",
+      name: t("menu.createUserLink"),
+      link: "/user-links/create",
+      icon: <Lock fontSize="small" />,
+      children: [],
+    },
+    {
+      id: "getUserLink",
+      name: t("menu.getUserLink"),
+      link: "/user-links/list",
+      icon: <LockOpen fontSize="small" />,
+      children: [],
+    },
+    {
+      id: "user",
+      name: t("menu.user"),
+      link: "/user",
+      icon: <Person fontSize="small" />,
+      children: [],
+    },
+  ];
+
+  const sections = [
+    {
+      name: t("menuSections.projects"),
+      menu: projectsMenu,
+      loading: areProjectsLoading,
+    },
+    {
+      name: t("menuSections.settings"),
+      menu: settingsMenu,
+    },
+  ];
 
   return (
     <aside
@@ -54,124 +123,79 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
       </div>
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
-          <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              Projekty
-            </h3>
-            {areProjectsLoading ? (
-              <div className="mb-4 ml-4">
+          {sections.map((section) => {
+            return section.loading ? (
+              <div key={section.name} className="mb-4 ml-4">
                 <Spinner />
               </div>
             ) : (
-              <ul className="mb-6 flex flex-col gap-1.5">
-                <SidebarLinkGroup>
-                  {(handleClick, open) => {
-                    return (
-                      <>
-                        <Link
-                          to="#"
-                          className="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleClick();
-                          }}
-                        >
-                          <Lock fontSize="small" /> {t("menu.privateProjects")}
-                          {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-                        </Link>
-                        <div
-                          className={`translate transform overflow-hidden ${
-                            !open && "hidden"
-                          }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            {personal.map((project) => (
-                              <li key={project.id}>
+              <div key={section.name}>
+                <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+                  {section.name}
+                </h3>
+                <ul className="mb-6 flex flex-col gap-1.5">
+                  {section.menu.map((menuItem) => {
+                    if (menuItem.children.length > 0) {
+                      return (
+                        <SidebarLinkGroup key={menuItem.id}>
+                          {(handleClick, open) => {
+                            return (
+                              <>
                                 <Link
-                                  className="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                  to={`/projects/${project.id}`}
+                                  to={menuItem.link}
+                                  className="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    handleClick();
+                                  }}
                                 >
-                                  {project.name}
+                                  {menuItem.icon} {menuItem.name}
+                                  {open ? (
+                                    <KeyboardArrowUp />
+                                  ) : (
+                                    <KeyboardArrowDown />
+                                  )}
                                 </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </>
-                    );
-                  }}
-                </SidebarLinkGroup>
-                <SidebarLinkGroup>
-                  {(handleClick, open) => {
-                    return (
-                      <>
-                        <Link
-                          to="#"
-                          className="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleClick();
+                                <div
+                                  className={`translate transform overflow-hidden ${
+                                    !open && "hidden"
+                                  }`}
+                                >
+                                  <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                                    {menuItem.children.map((menuItem) => (
+                                      <li key={menuItem.id}>
+                                        <Link
+                                          className="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                          to={menuItem.link}
+                                        >
+                                          {menuItem.name}
+                                        </Link>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              </>
+                            );
                           }}
-                        >
-                          <Public fontSize="small" /> {t("menu.publicProjects")}
-                          {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-                        </Link>
-                        <div
-                          className={`translate transform overflow-hidden ${
-                            !open && "hidden"
-                          }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            {shared.map((project) => (
-                              <li key={project.id}>
-                                <Link
-                                  className="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                  to={`/projects/${project.id}`}
-                                >
-                                  {project.name}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </>
-                    );
-                  }}
-                </SidebarLinkGroup>
-                <li>
-                  <Link
-                    className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                    to="/projects/create"
-                  >
-                    <Create fontSize="small" /> {t("menu.createProject")}
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </div>
-          <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              Ustawienia
-            </h3>
-            <ul className="mb-6 flex flex-col gap-1.5">
-              <li>
-                <Link
-                  className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                  to="/user-links/create"
-                >
-                  <Lock fontSize="small" /> {t("menu.createUserLink")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                  to="/user-links/list"
-                >
-                  <LockOpen fontSize="small" /> {t("menu.getUserLink")}
-                </Link>
-              </li>
-            </ul>
-          </div>
+                        </SidebarLinkGroup>
+                      );
+                    } else {
+                      return (
+                        <li key={menuItem.id}>
+                          <Link
+                            className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                            to={menuItem.link}
+                          >
+                            {menuItem.icon} {menuItem.name}
+                          </Link>
+                        </li>
+                      );
+                    }
+                  })}
+                </ul>
+              </div>
+            );
+          })}
         </nav>
       </div>
     </aside>

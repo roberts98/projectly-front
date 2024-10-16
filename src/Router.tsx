@@ -5,6 +5,7 @@ import { ProcessUserLinkPage } from "./pages/ProcessUserLinkPage";
 import { ProjectPage } from "./pages/ProjectPage";
 import { UserLinksPage } from "./pages/UserLinksPage";
 import { Page } from "./components/layout/Page";
+import { UserPage } from "./pages/UserPage.tsx";
 
 export function Router() {
   return (
@@ -20,6 +21,7 @@ export function Router() {
           />
           <Route path="/user-links/create" element={<CreateUserLinkPage />} />
           <Route path="/user-links/list" element={<UserLinksPage />} />
+          <Route path="/user" element={<UserPage />} />
         </Routes>
       </Page>
     </HashRouter>
